@@ -1,0 +1,21 @@
+{
+  "name": "simple-notes",
+  "version": "1.0.0",
+  "description": "demo project for unive",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:be": "docker run -dit --name simple-notes -p 3010:80 simple-notes; docker start simple-notes",
+    "restart:be": "docker stop simple-notes; docker rm simple-notes; npm run start:be "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cescx0f/simple-notes.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cescx0f/simple-notes/issues"
+  },
+  "homepage": "https://github.com/Cescx0f/simple-notes#readme"
+}
