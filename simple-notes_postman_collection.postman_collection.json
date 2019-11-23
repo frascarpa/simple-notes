@@ -1,0 +1,45 @@
+{
+	"info": {
+		"_postman_id": "99543c83-3bf3-4c10-909d-ac4d9087a677",
+		"name": "simple-notes_postman_collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "23c9069e-fd6e-430b-8b26-a9f26ceda00a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "9497e81e-e994-4228-9b44-f8417bdb876e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "fd3dbfc2-afae-4132-81a7-eaea3309b251",
+			"key": "url",
+			"value": "http://localhost:8088/~fscarpa/api/",
+			"type": "string"
+		},
+		{
+			"id": "3da9177b-413b-4f32-a31e-365fcf9c5e01",
+			"key": "port",
+			"value": "8088",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
