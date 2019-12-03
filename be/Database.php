@@ -23,5 +23,9 @@ class Database{
  
         return $this->conn;
     }
+
+    function mailExist() {
+        
+    }
 }
 ?>

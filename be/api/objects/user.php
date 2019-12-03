@@ -1,6 +1,23 @@
 <?php
 // 'user' object
-class User{
+
+class UserController{
+
+    public static function handleRequest($request){
+
+        if($request->isMethod('post')){
+            if ($request->isAction('register')) {
+                register($request);
+            }
+        }
+
+        Response::send(401, array("status" => "handling user request"));
+
+    }
+
+    private function register($request){
+        Response::send(200, array("status" => "handling user register"));
+    }
  
     // database connection and table name
     private $conn;
@@ -11,11 +28,6 @@ class User{
     public $nickname;
     public $email;
     public $password;
- 
-    // constructor
-    public function __construct($db){
-        $this->conn = $db;
-    }
  
     function create(){
  

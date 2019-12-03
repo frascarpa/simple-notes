@@ -27,9 +27,9 @@
         }
 
         public function isAction(string $action) {
-            $regex = '/' . str_replace('\:id', '\d+', preg_quote($action, '/')) . '$/i';
+            // $regex = '/' . str_replace('\:id', '\d+', preg_quote($action, '/')) . '$/i';
 
-            return preg_match($regex, $this->uri) === 1;
+            return strpos($this->uri, $action);
         }
 
         public function getId() {

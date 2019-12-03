@@ -2,21 +2,24 @@
     require_once 'Request.php';
     require_once 'Database.php';
     require_once 'Response.php';
+    require_once './api/objects/user.php';
 
     $request = new Request($_SERVER);
     $database = new Database('names.db');
 
-    $headers = [
-        'Content-Type' => 'application/json; charset=utf-8'
-    ];
-    
     
     if ($request->isMethod('get')) {
         if ($request->isAction('/api/test')) {
             $data = "Backend up and running!";
-            Response::send(200, $headers, array("status" => $data));
+            Response::send(200, array("status" => $data));
         }
     }
+
+    if ($request->isAction('/api/user/')) {
+        UserController::handleRequest($request);
+    }
+
+
 
     // if ($request->isMethod('get')) {
     //     if ($request->isAction('/api/names')) {
