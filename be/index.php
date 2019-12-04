@@ -3,10 +3,9 @@
     require_once 'Database.php';
     require_once 'Response.php';
     require_once './api/objects/user.php';
-
+    
     $request = new Request($_SERVER);
-    $database = new Database('names.db');
-
+    $_SESSION['database'] = new Database();
     
     if ($request->isMethod('get')) {
         if ($request->isAction('/api/test')) {

@@ -3,29 +3,55 @@
 class Database{
  
     // specify your own database credentials
-    private $host = "127.0.0.1";
+    private $host = "localhost";
     private $port = "5432";
     private $db_name = "simple-notes";
     private $username = "postgres";
     private $password = "postgres";
-    public $conn;
- 
-    // get the database connection
-    public function getConnection(){
- 
-        $this->conn = null;
- 
+    private $pdo;
+
+    private $user_table = "users";
+
+    function __construct(){
         try{
-            $this->conn = new PDO("pgsql:host=" . $this->host . ";port=" . $this->port . ";dbname=" . $this->db_name, $this->username, $this->password);
+            $this->pdo = new PDO("pgsql:host=" . $this->host . ";port=" . $this->port . ";dbname=" . $this->db_name, $this->username, $this->password);
         }catch(PDOException $exception){
-            echo "Connection error: " . $exception->getMessage();
+            Response::send(500, array("db_error" => $exception->getMessage()));
         }
+    }
  
-        return $this->conn;
+    public function mailExists($email) {
+        $sql = "SELECT email
+        FROM " . $this->user_table . "
+        WHERE email = :email";
+        // return $email;
+        $sth = $this->pdo->prepare($sql);
+        $sth->execute(array(':email' => $email));
+        $result = $sth->fetchAll();
+
+        return $result;
+     
+    }
+ 
+    public function register($nickname, $email, $password) {
+        // hash the password before saving to database
+        $password_hash = password_hash($password, PASSWORD_BCRYPT);
+
+        $sql = "INSERT INTO " . $this->user_table . "(nickname,email,password)
+        VALUES( :nickname, :email, :password)";
+        // return $email;
+        $sth = $this->pdo->prepare($sql);
+        if($sth->execute(array(
+            ':nickname' => $nickname,
+            ':email' => $email,
+            ':password' => $password_hash,
+        ))){
+            return true;
+        }
+        return false;
+     
     }
 
-    function mailExist() {
-        
-    }
+
 }
 ?>
