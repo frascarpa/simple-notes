@@ -24,10 +24,21 @@ class Database{
         $sql = "SELECT email
         FROM " . $this->user_table . "
         WHERE email = :email";
-        // return $email;
         $sth = $this->pdo->prepare($sql);
         $sth->execute(array(':email' => $email));
-        $result = $sth->fetchAll();
+        $result = $sth->fetch();
+
+        return $result;
+     
+    }
+
+    public function getUser($email) {
+        $sql = "SELECT nickname, password
+        FROM " . $this->user_table . "
+        WHERE email = :email";
+        $sth = $this->pdo->prepare($sql);
+        $sth->execute(array(':email' => $email));
+        $result = $sth->fetch();
 
         return $result;
      

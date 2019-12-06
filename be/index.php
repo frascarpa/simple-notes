@@ -2,6 +2,7 @@
     require_once 'Request.php';
     require_once 'Database.php';
     require_once 'Response.php';
+    require_once 'Auth.php';
     require_once './api/controllers/user.php';
     
     $request = new Request($_SERVER);
