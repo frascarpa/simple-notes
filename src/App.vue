@@ -43,7 +43,7 @@
           justify="center"
         >
           <v-col class="text-center">
-            <hello-world/>
+              <router-view></router-view>
           </v-col>
         </v-row>
       </v-container>
@@ -58,14 +58,10 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
 
 export default {
   name: 'App',
 
-  components: {
-    HelloWorld,
-  },
 
   data: () => ({
     //
