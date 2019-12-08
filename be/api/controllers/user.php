@@ -4,15 +4,17 @@ class UserController{
 
     public static function handleRequest($request){
 
+        if($request->isMethod('get')){
+            if ($request->isAction('me')) {
+                UserController::getMe($request);
+            }
+        }
         if($request->isMethod('post')){
             if ($request->isAction('register')) {
                 UserController::register($request);
             }
             if ($request->isAction('login')) {
                 UserController::login($request);
-            }
-            if ($request->isAction('me')) {
-                UserController::getMe($request);
             }
         }
         
@@ -34,7 +36,7 @@ class UserController{
                 Response::send(200, array(
                     "jwt" => $jwt,
                     "nickname" => $user->nickname,
-                    "email" => $user->email
+                    "email" => $email
                 ));
 
             }
@@ -49,7 +51,7 @@ class UserController{
         $data = $request->getData();
         $email = $data->email;
         if (empty($email)) {
-            Response::send(422, array("error" => "missing fields"));
+            Response::send(422, array("error" => $data));
         } else {
             $user = $_SESSION['database']->getUser($email);
             if ($user) {

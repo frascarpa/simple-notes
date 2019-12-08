@@ -17,11 +17,31 @@ function login(email, password){
         email,
         password,
     }).then((resp) => {
-        instance.defaults.headers.common['Authorization'] = `Bearer ${resp.data.data.jwt}`
+        instance.defaults.headers.common['Authorization'] = `${resp.data.data.jwt}`
         return resp;
     })
 }
 
+function register(email, nickname, password){
+    return instance.post('user/register', {
+        email,
+        nickname,
+        password,
+    });
+}
+
+function getMe(email){
+    // eslint-disable-next-line 
+    console.log('calling be /me', email)
+    return instance.get('user/me', {
+        params: {email},
+    })
+}
+
+
+
 export {
-    login
+    login,
+    getMe,
+    register,
 }

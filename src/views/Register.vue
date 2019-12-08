@@ -18,7 +18,7 @@
                 dark
                 flat
               >
-                <v-toolbar-title>Login form</v-toolbar-title>
+                <v-toolbar-title>Register form</v-toolbar-title>
                 <v-spacer />
               </v-toolbar>
               <v-card-text>
@@ -28,6 +28,14 @@
                     label="Email"
                     name="email"
                     prepend-icon="email"
+                    type="text"
+                  />
+
+                  <v-text-field
+                    v-model="nickname"
+                    label="Nickname"
+                    name="nickname"
+                    prepend-icon="user"
                     type="text"
                   />
 
@@ -43,7 +51,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="primary" @click="doLogin">Login</v-btn>
+                <v-btn color="primary" @click="register" :disabled="!isFormValid">Register</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -53,37 +61,42 @@
 
 <script>
 
-import {login} from '@/api.js'
+import {register} from '@/api.js'
 export default {
-  name: 'Login',
+  name: 'Register',
+
 
   data: () => ({
       email: null,
       password: null,
-      error:false,
+      nickname: null,
   }),
 
-  created() {
-    this.logout();
+  computed: {
+    isFormValid() {
+      return this.email && this.password && this.nickname; 
+    }
   },
 
   methods: {
-    logout(){
-      this.$emit('logout')
-    },
-      doLogin() {
-          return login(this.email, this.password)
-            .then(({data})=>{
-              this.$emit('logged-in',{
-                isLogged: true,
-                email: data.data.email,
-              });
+      register() {
+          return register(this.email, this.nickname, this.password)
+            .then(()=>{
+                this.$notify({
+                  type: 'success',
+                  group: 'info',
+                  title: 'User Created',
+                  text: 'The requested user has been created. Please Login.',
+                });
+                this.$router.push('login')
               }).catch((err)=>{
+                // eslint-disable-next-line
+                console.log(err);
                 this.$notify({
                   type: 'error',
                   group: 'info',
                   title: 'Error',
-                  text: 'Credentials invalid'+ err,
+                  text: 'This user already exist, change email/nickname',
                 });
               })
       },

@@ -13,14 +13,43 @@
               <v-list-item-title>Home</v-list-item-title>
             </v-list-item-content>
         </v-list-item>
-        <v-list-item link @click="$router.push('login')">
-          <v-list-item-action>
-            <v-icon>mdi-login</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Login</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+        <template v-if="!user.isLogged">
+          <v-list-item link @click="$router.push('login')">
+            <v-list-item-action>
+              <v-icon>mdi-login</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Login</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item link @click="$router.push('register')">
+            <v-list-item-action>
+              <v-icon>mdi-register</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Register</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+        <template v-else>
+          <v-list-item link @click="$router.push('login')">
+            <v-list-item-action>
+              <v-icon>mdi-logout</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Logout</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item link >
+            <v-list-item-action>
+              <v-icon>mdi-pencil</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>New Note</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+
       </v-list>
     </v-navigation-drawer>
 
@@ -43,7 +72,7 @@
           justify="center"
         >
           <v-col class="text-center">
-              <router-view @logged-in="setLoggedIn"></router-view>
+              <router-view :user="user"  @logout="logout" @logged-in="setLoggedIn"></router-view>
           </v-col>
         </v-row>
       </v-container>
@@ -66,19 +95,28 @@ export default {
 
   data: () => ({
     drawer: false,
-    user:{
-      isLogged: false,
-      email: null,
-      nickname: null,
-    }
+    user: {
+        isLogged: false,
+        email: null,
+        nickname: null,
+      },
   }),
 
   methods: {
+    createEmptyUser(){
+      return {
+        isLogged: false,
+        email: null,
+        nickname: null,
+      };
+    },
     setLoggedIn(user) {
-      // eslint-disable-next-line 
-      console.log('logged in rreceived')
-      this.user = user;      
-    }
+      this.user = user;
+      this.$router.push('/');      
+    },
+    logout(){
+      this.user = this.createEmptyUser();
+    },
   },
 };
 </script>

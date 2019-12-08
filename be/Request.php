@@ -15,7 +15,11 @@
             // var_dump($this->headers);
             $this->method = $server['REQUEST_METHOD'];
             $this->uri = $server['REQUEST_URI'];
-            $this->data = json_decode(file_get_contents('php://input'));
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                $this->data = (object) $_GET;
+            } else {
+                $this->data = json_decode(file_get_contents('php://input'));
+            }
         }
 
         public function getMethod() {
