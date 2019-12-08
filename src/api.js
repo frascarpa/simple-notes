@@ -16,6 +16,9 @@ function login(email, password){
     return instance.post('user/login', {
         email,
         password,
+    }).then((resp) => {
+        instance.defaults.headers.common['Authorization'] = `Bearer ${resp.data.data.jwt}`
+        return resp;
     })
 }
 

@@ -11,6 +11,9 @@ class UserController{
             if ($request->isAction('login')) {
                 UserController::login($request);
             }
+            if ($request->isAction('me')) {
+                UserController::getMe($request);
+            }
         }
         
         Response::send(404, array("error" => "method not found"));
@@ -30,6 +33,27 @@ class UserController{
                 $jwt = Auth::createJwt(array("email" => $email, 'password' => $password));
                 Response::send(200, array(
                     "jwt" => $jwt,
+                    "nickname" => $user->nickname,
+                    "email" => $user->email
+                ));
+
+            }
+
+            Response::send(401, array("error" => "unauthorized"));
+
+        }
+    }
+
+    private static function getMe($request){
+        Auth::authMiddleware($request);
+        $data = $request->getData();
+        $email = $data->email;
+        if (empty($email)) {
+            Response::send(422, array("error" => "missing fields"));
+        } else {
+            $user = $_SESSION['database']->getUser($email);
+            if ($user) {
+                Response::send(200, array(
                     "nickname" => $user->nickname,
                     "email" => $user->email
                 ));

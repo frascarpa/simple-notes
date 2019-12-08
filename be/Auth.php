@@ -21,7 +21,7 @@ class Auth {
     }
 
     public static function authMiddleware($req) {
-        $jwt = $req->jwt;
+        $jwt = $req->getHeaders()['Authorization'];
         Auth::checkJwtValid($jwt);
     }
 

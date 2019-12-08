@@ -41,6 +41,9 @@
                   />
                 </v-form>
               </v-card-text>
+              <v-alert v-if="error" type="error">
+                Credentials not valid, retry.
+              </v-alert>
               <v-card-actions>
                 <v-spacer />
                 <v-btn color="primary" @click="doLogin">Login</v-btn>
@@ -60,13 +63,26 @@ export default {
   data: () => ({
       email: null,
       password: null,
-      loginResult: null,
+      error:false,
   }),
 
   methods: {
-      async doLogin() {
-        //   console.log("call login", this.email, this.password);
-          this.loginResult = await login(this.email, this.password)
+      doLogin() {
+          return login(this.email, this.password)
+            .then(({data})=>{
+              this.$emit('logged-in',{
+                isLogged: true,
+                email: data.data.email,
+                nickname: data.data.nickname,
+              });
+              }).catch((err)=>{
+                this.$notify({
+                  type: 'error',
+                  group: 'info',
+                  title: 'Error',
+                  text: 'Credentials invalid'+ err,
+                });
+              })
       }
   },
 }

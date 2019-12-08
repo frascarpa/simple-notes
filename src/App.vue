@@ -30,7 +30,7 @@
       dark
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>Application- {{user.isLogged? 'welcome back!' : ' please login'}}</v-toolbar-title>
     </v-app-bar>
 
     <v-content>
@@ -43,7 +43,7 @@
           justify="center"
         >
           <v-col class="text-center">
-              <router-view></router-view>
+              <router-view @logged-in="setLoggedIn"></router-view>
           </v-col>
         </v-row>
       </v-container>
@@ -54,6 +54,7 @@
     >
       <span class="white--text">&copy; 2019</span>
     </v-footer>
+    <notifications position="bottom center" width="100%" group="info" />
   </v-app>
 </template>
 
@@ -64,8 +65,20 @@ export default {
 
 
   data: () => ({
-    drawer: true,
-    loggedIn: false,
+    drawer: false,
+    user:{
+      isLogged: false,
+      email: null,
+      nickname: null,
+    }
   }),
+
+  methods: {
+    setLoggedIn(user) {
+      // eslint-disable-next-line 
+      console.log('logged in rreceived')
+      this.user = user;      
+    }
+  },
 };
 </script>
