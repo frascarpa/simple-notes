@@ -5,6 +5,12 @@
         private $data;
 
         public function __construct(array $server) {
+
+            // handling cors preflight
+            if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+                exit;
+            }
+
             $this->method = $server['REQUEST_METHOD'];
             $this->uri = $server['REQUEST_URI'];
             $this->data = json_decode(file_get_contents('php://input'));

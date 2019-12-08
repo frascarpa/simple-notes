@@ -24,7 +24,7 @@
               <v-card-text>
                 <v-form>
                   <v-text-field
-                    :model="email"
+                    v-model="email"
                     label="Email"
                     name="email"
                     prepend-icon="email"
@@ -32,7 +32,7 @@
                   />
 
                   <v-text-field
-                    :model="password"
+                    v-model="password"
                     id="password"
                     label="Password"
                     name="password"
@@ -43,7 +43,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="primary">Login</v-btn>
+                <v-btn color="primary" @click="doLogin">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -52,12 +52,22 @@
 </template>
 
 <script>
+
+import {login} from '@/api.js'
 export default {
   name: 'Login',
 
   data: () => ({
       email: null,
       password: null,
-  })
+      loginResult: null,
+  }),
+
+  methods: {
+      async doLogin() {
+        //   console.log("call login", this.email, this.password);
+          this.loginResult = await login(this.email, this.password)
+      }
+  },
 }
 </script>

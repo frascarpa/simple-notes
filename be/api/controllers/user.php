@@ -21,11 +21,12 @@ class UserController{
         $data = $request->getData();
         $email = $data->email;
         $password = $data->password;
-        if (empty($nickname) | empty($email)) {
+        if (empty($email) | empty($password)) {
             Response::send(422, array("error" => "missing fields"));
         } else {
             $user = $_SESSION['database']->getUser($email);
-            if ($user & password_verify($password, $user->$password)) {
+            // Response::send(422, array("error" => $user->password));
+            if ($user & password_verify($password, $user->password)) {
                 $jwt = Auth::createJwt(array("email" => $email, 'password' => $password));
                 Response::send(200, array(
                     "jwt" => $jwt,

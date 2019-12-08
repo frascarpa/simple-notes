@@ -26,7 +26,7 @@ class Database{
         WHERE email = :email";
         $sth = $this->pdo->prepare($sql);
         $sth->execute(array(':email' => $email));
-        $result = $sth->fetch();
+        $result = $sth->fetch(PDO::FETCH_ASSOC);
 
         return $result;
      
@@ -38,9 +38,9 @@ class Database{
         WHERE email = :email";
         $sth = $this->pdo->prepare($sql);
         $sth->execute(array(':email' => $email));
-        $result = $sth->fetch();
+        $result = $sth->fetch(PDO::FETCH_ASSOC);
 
-        return $result;
+        return  (object) $result;
      
     }
  

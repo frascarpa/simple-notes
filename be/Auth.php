@@ -16,7 +16,7 @@ class Auth {
         }
     }
 
-    private static function createJwt($payload) {
+    public static function createJwt($payload) {
         return JWT::encode($payload, $key);
     }
 
