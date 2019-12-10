@@ -30,12 +30,8 @@ function register(email, nickname, password){
     });
 }
 
-function getMe(email){
-    // eslint-disable-next-line 
-    console.log('calling be /me', email)
-    return instance.get('user/me', {
-        params: {email},
-    })
+function getMe(){
+    return instance.get('user/me');
 }
 
 

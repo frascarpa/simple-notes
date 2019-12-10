@@ -13,6 +13,7 @@ class Auth {
             try {
                 $key = Auth::getKey();
                 $decoded = JWT::decode($jwt, $key, array('HS256'));
+                return $decoded;
             } catch (Exception $e){
                 Response::send(401, array("error" => $e));
             }
@@ -26,9 +27,10 @@ class Auth {
         return JWT::encode($payload, Auth::getKey());
     }
 
+    // this function will return the user data, encoded in the jwt
     public static function authMiddleware($req) {
         $jwt = $req->getHeaders()['Authorization'];
-        Auth::checkJwtValid($jwt);
+        return Auth::checkJwtValid($jwt);
     }
 
 

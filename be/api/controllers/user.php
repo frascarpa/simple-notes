@@ -32,7 +32,7 @@ class UserController{
             $user = $_SESSION['database']->getUser($email);
             // Response::send(422, array("error" => $user->password));
             if ($user & password_verify($password, $user->password)) {
-                $jwt = Auth::createJwt(array("email" => $email, 'password' => $password));
+                $jwt = Auth::createJwt(array("email" => $email, 'password' => $user->password, "nickname" => $user->nickname));
                 Response::send(200, array(
                     "jwt" => $jwt,
                     "nickname" => $user->nickname,
@@ -47,24 +47,11 @@ class UserController{
     }
 
     private static function getMe($request){
-        Auth::authMiddleware($request);
-        $data = $request->getData();
-        $email = $data->email;
-        if (empty($email)) {
-            Response::send(422, array("error" => $data));
-        } else {
-            $user = $_SESSION['database']->getUser($email);
-            if ($user) {
-                Response::send(200, array(
-                    "nickname" => $user->nickname,
-                    "email" => $user->email
-                ));
-
-            }
-
-            Response::send(401, array("error" => "unauthorized"));
-
-        }
+        $user = Auth::authMiddleware($request);
+        Response::send(200, array(
+            "nickname" => $user->nickname,
+            "email" => $user->email
+        ));
     }
 
 
@@ -74,7 +61,7 @@ class UserController{
         $nickname = $data->nickname;
         $email = $data->email;
         $password = $data->password;
-        // Response::send(200, array("error" => $nickname));
+        
         if (empty($nickname) | empty($email) | empty($password)) {
             Response::send(422, array("error" => "missing fields".$nickname));
         } else {
