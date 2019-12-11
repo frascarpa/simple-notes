@@ -11,6 +11,8 @@ class Database{
     private $pdo;
 
     private $user_table = "users";
+    private $course_table = "courses";
+    private $lesson_table = "lessons";
 
     function __construct(){
         try{
@@ -19,6 +21,8 @@ class Database{
             Response::send(500, array("db_error" => $exception->getMessage()));
         }
     }
+
+    // USER queries
  
     public function mailExists($email) {
         $sql = "SELECT email
@@ -63,6 +67,42 @@ class Database{
      
     }
 
+    // COURSE queries
+     
+    public function courseExists($name) {
+        $sql = "SELECT *
+        FROM " . $this->course_table . "
+        WHERE name = :name";
+        $sth = $this->pdo->prepare($sql);
+        $sth->execute(array(':name' => $name));
+        $result = $sth->fetch(PDO::FETCH_ASSOC);
+
+        return (object) $result;
+     
+    }
+
+    public function getAllCourses() {
+        $sql = "SELECT *
+        FROM " . $this->course_table;
+        $sth = $this->pdo->prepare($sql)->execute();
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function createCourse($name, $description, $user) {
+        $sql = "INSERT INTO " . $this->course_table . "(name,description,userId)
+        VALUES( :name, :description, :userId)";
+        $sth = $this->pdo->prepare($sql);
+        if($sth->execute(array(
+            ':name' => $name,
+            ':description' => $description,
+            ':userId' => $user->id,
+        )))
+            {
+            return $this->courseExists($name);
+        }
+        return false;
+     
+    }
 
 }
 ?>

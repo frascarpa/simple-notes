@@ -7,6 +7,7 @@
     require_once 'Response.php';
     require_once 'Auth.php';
     require_once './api/controllers/user.php';
+    require_once './api/controllers/course.php';
 
     header("Access-Control-Allow-Origin: *");
 
@@ -23,6 +24,10 @@
 
     if ($request->isAction('/api/user/')) {
         UserController::handleRequest($request);
+    }
+
+    if ($request->isAction('/api/courses/')) {
+        CourseController::handleRequest($request);
     }
 
 

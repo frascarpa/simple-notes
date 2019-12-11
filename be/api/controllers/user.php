@@ -30,9 +30,8 @@ class UserController{
             Response::send(422, array("error" => "missing fields"));
         } else {
             $user = $_SESSION['database']->getUser($email);
-            // Response::send(422, array("error" => $user->password));
             if ($user & password_verify($password, $user->password)) {
-                $jwt = Auth::createJwt(array("email" => $email, 'password' => $user->password, "nickname" => $user->nickname));
+                $jwt = Auth::createJwt(array("id" => $user->id, "email" => $email, 'password' => $user->password, "nickname" => $user->nickname));
                 Response::send(200, array(
                     "jwt" => $jwt,
                     "nickname" => $user->nickname,
@@ -61,9 +60,9 @@ class UserController{
         $nickname = $data->nickname;
         $email = $data->email;
         $password = $data->password;
-        
+
         if (empty($nickname) | empty($email) | empty($password)) {
-            Response::send(422, array("error" => "missing fields".$nickname));
+            Response::send(422, array("error" => "missing fields"));
         } else {
             $mailExists = $_SESSION['database']->mailExists($data->email);
             if(!$mailExists){
