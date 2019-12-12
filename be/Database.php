@@ -81,6 +81,18 @@ class Database{
      
     }
 
+    public function getCourseById($id) {
+        $sql = "SELECT *
+        FROM " . $this->course_table . "
+        WHERE id = :id";
+        $sth = $this->pdo->prepare($sql);
+        $sth->execute(array(':id' => $id));
+        $result = $sth->fetch(PDO::FETCH_ASSOC);
+
+        return (object) $result;
+     
+    }
+
     public function getAllCourses() {
         $sql = "SELECT *
         FROM " . $this->course_table;
@@ -99,6 +111,52 @@ class Database{
         )))
             {
             return $this->courseExists($name);
+        }
+        return false;
+     
+    }
+
+    // LESSONS queries
+     
+    public function lessonExists($name) {
+        $sql = "SELECT *
+        FROM " . $this->lesson_table . "
+        WHERE name = :name";
+        $sth = $this->pdo->prepare($sql);
+        $sth->execute(array(':name' => $name));
+        $result = $sth->fetch(PDO::FETCH_ASSOC);
+
+        return (object) $result;
+     
+    }
+
+    public function getAllLessons() {
+        $sql = "SELECT *
+        FROM " . $this->lesson_table;
+        $sth = $this->pdo->prepare($sql)->execute();
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getLessonsByCourse() {
+        $sql = "SELECT ".$this->lesson_table. "*, ".$this->course_table. "id as idc
+        FROM " . $this->lesson_table .", ". $this->lesson_table .
+        "WHERE idc = :courseId";
+        $sth = $this->pdo->prepare($sql)->execute();
+        return $sth->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function createLesson($name, $description, $courseId, $user) {
+        $sql = "INSERT INTO " . $this->lesson_table . "(name,description,courseId,userId)
+        VALUES( :name, :description, :courseId, :userId)";
+        $sth = $this->pdo->prepare($sql);
+        if($sth->execute(array(
+            ':name' => $name,
+            ':description' => $description,
+            ':courseId' => $courseId,
+            ':userId' => $user->id,
+        )))
+            {
+            return $this->lessonExists($name);
         }
         return false;
      
