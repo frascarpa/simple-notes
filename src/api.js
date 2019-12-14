@@ -1,4 +1,6 @@
 import axios from 'axios';
+import router from './router'
+
 
 const restUrl = 'http://localhost:8088/~francesco/api/'
 
@@ -11,6 +13,15 @@ const instance = axios.create({
       "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token"
     }
   });
+
+  instance.interceptors.response.use(response => {
+    return response;
+ }, error => {
+   if (error.response.status === 401) {
+        router.push('login');
+   }
+   return error;
+ });
 
 function login(email, password){
     return instance.post('user/login', {
@@ -34,10 +45,24 @@ function getMe(){
     return instance.get('user/me');
 }
 
+function getCourses(){
+    return instance.get('courses/all');
+}
+
+function createCourse(name, description){
+    return instance.post('courses/create', {
+        name,
+        description
+    });
+}
+
+
 
 
 export {
     login,
     getMe,
     register,
+    getCourses,
+    createCourse,
 }

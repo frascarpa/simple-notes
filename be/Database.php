@@ -37,7 +37,7 @@ class Database{
     }
 
     public function getUser($email) {
-        $sql = "SELECT nickname, password
+        $sql = "SELECT *
         FROM " . $this->user_table . "
         WHERE email = :email";
         $sth = $this->pdo->prepare($sql);
@@ -77,7 +77,7 @@ class Database{
         $sth->execute(array(':name' => $name));
         $result = $sth->fetch(PDO::FETCH_ASSOC);
 
-        return (object) $result;
+        return $result;
      
     }
 
@@ -96,23 +96,24 @@ class Database{
     public function getAllCourses() {
         $sql = "SELECT *
         FROM " . $this->course_table;
-        $sth = $this->pdo->prepare($sql)->execute();
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
+        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function createCourse($name, $description, $user) {
-        $sql = "INSERT INTO " . $this->course_table . "(name,description,userId)
-        VALUES( :name, :description, :userId)";
+    public function createCourse($name, $description = '', $user) {
+        $sql = "INSERT INTO " . $this->course_table . "(name,description,user_id)
+        VALUES( :name, :description, :user_id)";
         $sth = $this->pdo->prepare($sql);
-        if($sth->execute(array(
+        $result = $sth->execute(array(
             ':name' => $name,
             ':description' => $description,
-            ':userId' => $user->id,
-        )))
-            {
+            ':user_id' => (int) $user->id,
+        ));
+        var_dump($name, $description, $user->id);
+        if($result){
             return $this->courseExists($name);
+        } else {
+            return $result;
         }
-        return false;
      
     }
 

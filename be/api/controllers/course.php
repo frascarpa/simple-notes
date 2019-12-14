@@ -28,13 +28,15 @@ class CourseController{
         $name = $data->name;
         $description = $data->name;
 
-        if (empty($name) | empty($description)) {
+        if (empty($name)) {
             Response::send(422, array("error" => "missing fields"));
         } else {
             $courseExists = $_SESSION['database']->courseExists($name);
             if (!$courseExists) {
                 $created = $_SESSION['database']->createCourse($name, $description, $user);
                 Response::send(200, (array) $created);
+            } else {
+                Response::send(422, array("error" => "course already exists"));
             }
         }
     }

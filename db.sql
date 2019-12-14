@@ -5,7 +5,7 @@
 -- Dumped from database version 11.6 (Ubuntu 11.6-1.pgdg19.10+1)
 -- Dumped by pg_dump version 11.6 (Ubuntu 11.6-1.pgdg19.10+1)
 
--- Started on 2019-12-11 00:46:28 GMT
+-- Started on 2019-12-14 16:09:28 GMT
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -69,7 +69,7 @@ CREATE TABLE public.courses (
     description character varying(256),
     id bigint DEFAULT nextval('public.courses_id_seq'::regclass) NOT NULL,
     name character varying(256),
-    "userId" bigint NOT NULL
+    user_id bigint NOT NULL
 );
 
 
@@ -158,6 +158,8 @@ ALTER TABLE public.users OWNER TO postgres;
 -- Data for Name: courses; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO public.courses (description, id, name, user_id) VALUES ('corso1', 1, 'corso1', 31);
+INSERT INTO public.courses (description, id, name, user_id) VALUES ('corso 2', 2, 'corso 2', 31);
 
 
 --
@@ -174,8 +176,7 @@ ALTER TABLE public.users OWNER TO postgres;
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.users (email, id, nickname, password, created) VALUES ('asd@asd.com', 28, 'aldo', '$2y$10$DdEIgqr9ckq6kfMPyBLBcuPjs8SEOu.fkM3HwUDsq4CSiXvDaFoci', NULL);
-INSERT INTO public.users (email, id, nickname, password, created) VALUES ('user@user.com', 29, 'user1', '$2y$10$U7FanT.V8XE1rU5urtnKzu4pBh26rcHOdiFuvqbbB0OCJQWve6gFG', NULL);
+INSERT INTO public.users (email, id, nickname, password, created) VALUES ('asd@asd.com', 31, 'aldo', '$2y$10$UF/cz3Q9r0A32nvlRXiZ1OPTxwWb/3nChGAINxvk3X2n05m3jCd.e', NULL);
 
 
 --
@@ -184,7 +185,7 @@ INSERT INTO public.users (email, id, nickname, password, created) VALUES ('user@
 -- Name: courses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.courses_id_seq', 1, false);
+SELECT pg_catalog.setval('public.courses_id_seq', 2, true);
 
 
 --
@@ -211,7 +212,7 @@ SELECT pg_catalog.setval('public.notes_id_seq', 1, false);
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 29, true);
+SELECT pg_catalog.setval('public.users_id_seq', 31, true);
 
 
 --
@@ -251,15 +252,6 @@ ALTER TABLE ONLY public.lessons
 
 
 --
--- TOC entry 2961 (class 2606 OID 16412)
--- Name: courses userId; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.courses
-    ADD CONSTRAINT "userId" FOREIGN KEY ("userId") REFERENCES public.users(id);
-
-
---
 -- TOC entry 2962 (class 2606 OID 16430)
 -- Name: lessons userId; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
@@ -268,7 +260,16 @@ ALTER TABLE ONLY public.lessons
     ADD CONSTRAINT "userId" FOREIGN KEY ("userId") REFERENCES public.users(id);
 
 
--- Completed on 2019-12-11 00:46:28 GMT
+--
+-- TOC entry 2961 (class 2606 OID 16412)
+-- Name: courses user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.courses
+    ADD CONSTRAINT user_id FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+-- Completed on 2019-12-14 16:09:28 GMT
 
 --
 -- PostgreSQL database dump complete

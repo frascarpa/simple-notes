@@ -40,6 +40,14 @@
               <v-list-item-title>Logout</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <v-list-item link @click="$router.push('explore')">
+            <v-list-item-action>
+              <v-icon>mdi-explore</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>explore</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
           <v-list-item link >
             <v-list-item-action>
               <v-icon>mdi-pencil</v-icon>
