@@ -20,8 +20,8 @@ class LessonController{
 
     private static function getAll($request) {
         $user =  Auth::authMiddleware($request);
-        $courses = $_SESSION['database']->getAllLessons();
-        Response::send(200, array($courses));
+        $lessons = $_SESSION['database']->getAllLessons();
+        Response::send(200, $lessons);
     }
 
     private static function getRelated($request) {
@@ -34,8 +34,8 @@ class LessonController{
         if (empty($courseId)) {
             Response::send(422, array("error" => "missing fields"));
         } else {
-            $courses = $_SESSION['database']->getLessonsByCourse($courseId);
-            Response::send(200, array($courses));
+            $lessons = $_SESSION['database']->getLessonsByCourse($courseId);
+            Response::send(200, array($lessons));
         }
     }
 
@@ -47,14 +47,17 @@ class LessonController{
         $description = $data->name;
         $courseId = $data->courseId;
 
-        if (empty($name) | empty($description)) {
+        if (empty($name) | empty($courseId)) {
             Response::send(422, array("error" => "missing fields"));
         } else {
-            $courseExists = $_SESSION['database']->getCourseById($name);
+            $courseExists = $_SESSION['database']->getCourseById($courseId);
             $lessonExists = $_SESSION['database']->lessonExists($name);
-            if (!$lessonExists) {
+            var_dump($lessonExists);
+            if ($courseExists && !$lessonExists) {
                 $created = $_SESSION['database']->createLesson($name, $description, $courseId, $user);
-                Response::send(200, (array) $created);
+                Response::send(200, $created);
+            } else {
+                Response::send(422, array("error" => "invalid course"));
             }
         }
     }

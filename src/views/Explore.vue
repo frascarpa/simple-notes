@@ -1,22 +1,29 @@
 <template>
   <div>
-    <div>COURSES</div>
+    <div>Explore</div>
     <div>
       <create-course @created="fetchAllCourses" />
+      <create-lesson  />
     </div>
-    <div>{{courses}}</div>
+    <div>
+        <course-list :courses="courses" />
+    </div>
   </div>
 </template>
 
 <script>
 import { getCourses } from "@/api.js";
 import CreateCourse from "@/components/CreateCourse.vue";
+import CreateLesson from "@/components/CreateLesson.vue";
+import CourseList from "@/components/CourseList.vue";
 
 export default {
   nane: "Explore",
 
   components: {
-    CreateCourse
+    CreateCourse,
+    CreateLesson,
+    CourseList,
   },
 
   data() {

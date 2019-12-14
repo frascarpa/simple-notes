@@ -56,6 +56,18 @@ function createCourse(name, description){
     });
 }
 
+function getLessons(){
+    return instance.get('lessons/all');
+}
+
+function createLesson(name, description, courseId){
+    return instance.post('lessons/create', {
+        name,
+        description,
+        courseId,
+    });
+}
+
 
 
 
@@ -65,4 +77,6 @@ export {
     register,
     getCourses,
     createCourse,
+    getLessons,
+    createLesson,
 }

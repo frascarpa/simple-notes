@@ -3,12 +3,12 @@
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on }">
         <v-btn color="primary" dark v-on="on">
-            <v-icon>mdi-plus</v-icon> Add Course
+            <v-icon>mdi-plus</v-icon> Add Lesson
         </v-btn>
       </template>
       <v-card>
         <v-card-title>
-          <span class="headline">User Profile</span>
+          <span class="headline">New Lesson</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -22,6 +22,19 @@
                 <v-text-field v-model="description" label="Description"></v-text-field>
               </v-col>
             </v-row>
+            
+            <v-row>
+              <v-col cols="12">
+                    <v-select
+                      v-model="selectedCourse"
+                      :items="courses"
+                      label="Courses"
+                      item-text="name"
+                      item-value="id"
+                  ></v-select>
+              </v-col>
+            </v-row>
+            
           </v-container>
           <small>*indicates required field</small>
         </v-card-text>
@@ -37,22 +50,33 @@
 
 <script>
 
-import { createCourse } from '@/api.js';
+import { createLesson, getCourses } from '@/api.js';
 
 export default {
-    name: 'create-course',
+    name: 'create-lesson',
 
     data() {
         return {
             dialog: false,
             name: null,
             description: null,
+            courses: [],
+            selectedCourse: null,
         };
     },
 
+    watch: {
+      dialog(newValue) {
+        if(newValue === true) {
+          getCourses().then(({ data }) => (this.courses = data.data));
+        }
+        
+      }
+    },
+    
     methods: {
         create() {
-            createCourse(this.name, this.description)
+            createLesson(this.name, this.description, this.selectedCourse)
                 .then(() => {
                     this.dialog = false;
                     this.$emit('created');

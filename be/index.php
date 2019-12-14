@@ -8,6 +8,7 @@
     require_once 'Auth.php';
     require_once './api/controllers/user.php';
     require_once './api/controllers/course.php';
+    require_once './api/controllers/lesson.php';
 
     header("Access-Control-Allow-Origin: *");
 
@@ -30,6 +31,10 @@
         CourseController::handleRequest($request);
     }
 
+    if ($request->isAction('/api/lessons/')) {
+        LessonController::handleRequest($request);
+    }
+    
 
 
     // if ($request->isMethod('get')) {

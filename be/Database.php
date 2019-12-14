@@ -89,7 +89,7 @@ class Database{
         $sth->execute(array(':id' => $id));
         $result = $sth->fetch(PDO::FETCH_ASSOC);
 
-        return (object) $result;
+        return $result;
      
     }
 
@@ -108,7 +108,6 @@ class Database{
             ':description' => $description,
             ':user_id' => (int) $user->id,
         ));
-        var_dump($name, $description, $user->id);
         if($result){
             return $this->courseExists($name);
         } else {
@@ -127,15 +126,14 @@ class Database{
         $sth->execute(array(':name' => $name));
         $result = $sth->fetch(PDO::FETCH_ASSOC);
 
-        return (object) $result;
+        return $result;
      
     }
 
     public function getAllLessons() {
         $sql = "SELECT *
         FROM " . $this->lesson_table;
-        $sth = $this->pdo->prepare($sql)->execute();
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
+        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function getLessonsByCourse() {
@@ -147,7 +145,7 @@ class Database{
     }
 
     public function createLesson($name, $description, $courseId, $user) {
-        $sql = "INSERT INTO " . $this->lesson_table . "(name,description,courseId,userId)
+        $sql = "INSERT INTO " . $this->lesson_table . "(name,description,course_id,user_id)
         VALUES( :name, :description, :courseId, :userId)";
         $sth = $this->pdo->prepare($sql);
         if($sth->execute(array(
