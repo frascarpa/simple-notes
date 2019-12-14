@@ -4,6 +4,7 @@ import Home from '@/views/Home.vue'
 import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
 import Explore from '@/views/Explore.vue'
+import Create from '@/views/Create.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/explore',
     name: 'explore',
     component: Explore
+  },
+  {
+    path: '/create',
+    name: 'create',
+    component: Create
   },
 ]
 

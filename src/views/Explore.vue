@@ -1,12 +1,14 @@
 <template>
   <div>
     <div>Explore</div>
+    <v-container>
+      <v-row>
+        <create-course @created="fetchAllCourses" />
+        <create-lesson />
+      </v-row>
+    </v-container>
     <div>
-      <create-course @created="fetchAllCourses" />
-      <create-lesson  />
-    </div>
-    <div>
-        <course-list :courses="courses" />
+      <course-list :courses="courses" />
     </div>
   </div>
 </template>
@@ -23,7 +25,7 @@ export default {
   components: {
     CreateCourse,
     CreateLesson,
-    CourseList,
+    CourseList
   },
 
   data() {

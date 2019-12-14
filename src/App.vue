@@ -42,10 +42,18 @@
           </v-list-item>
           <v-list-item link @click="$router.push('explore')">
             <v-list-item-action>
-              <v-icon>mdi-explore</v-icon>
+              <v-icon>mdi-compass</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>explore</v-list-item-title>
+              <v-list-item-title>Explore</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item link @click="$router.push('create')">
+            <v-list-item-action>
+              <v-icon>mdi-creation</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Create</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item link >
