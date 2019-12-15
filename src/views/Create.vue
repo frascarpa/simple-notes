@@ -3,8 +3,9 @@
     <v-container>
       <v-card class="mx-auto create-group mb-4" outlined>
         <v-row justify="center">
-          <div class="headline mb-4">Create a new Entity</div>
+          <div class=" mb-4">Create a new Entity</div>
         </v-row>
+          <v-divider/>
         <v-row>
           <create-course @created="fetchCourses" />
           <create-lesson @created="fetchLessons" />
@@ -12,8 +13,9 @@
       </v-card>
       <v-card class="mx-auto create-group" outlined>
         <v-row justify="center">
-          <div class="headline">Or add a new note</div>
+          <div class=" mb-4">Or add a new note</div>
         </v-row>
+          <v-divider/>
         <v-row>
           <v-col cols="5">
             <v-text-field v-model="title" label="Title *" required></v-text-field>
@@ -116,10 +118,16 @@ export default {
     createNote() {
       createNote(this.title, this.description, this.selectedLesson)
       .then(({data}) => {
-        // eslint-disable-next-line
-        console.log(data)
       this.$router.push({name: 'notes', params:{id: data.data.id}})
       })
+    },
+    notifyEntityCreated() {
+        this.$notify({
+            type: "success",
+            group: "info",
+            title: "Done!",
+            text: "New entity created"
+          });
     }
   }
 };

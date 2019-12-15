@@ -5,14 +5,6 @@
       app
     >
       <v-list dense>
-        <v-list-item link  @click="$router.push({name:'/'})">
-          <v-list-item-action>
-              <v-icon>mdi-home</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Home</v-list-item-title>
-            </v-list-item-content>
-        </v-list-item>
         <template v-if="!user.isLogged">
           <v-list-item link @click="$router.push({name:'login'})">
             <v-list-item-action>
@@ -24,7 +16,7 @@
           </v-list-item>
           <v-list-item link @click="$router.push({name:'register'})">
             <v-list-item-action>
-              <v-icon>mdi-register</v-icon>
+              <v-icon>mdi-account-multiple-plus</v-icon>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>Register</v-list-item-title>
@@ -75,7 +67,7 @@
       dark
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title>Application- {{user.isLogged? 'welcome back!' : ' please login'}}</v-toolbar-title>
+      <v-toolbar-title>Simple Notes</v-toolbar-title>
     </v-app-bar>
 
     <v-content>

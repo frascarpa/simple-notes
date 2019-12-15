@@ -1,17 +1,6 @@
 <template>
   <div>
-    <div v-if="user.isLogged">
-      <div>
-        Welcome back, {{user.nickname}}
-      </div>
-      <div>
-        your email: {{user.email}}
-      </div>
-      <v-btn @click="getMe(user.email)">request Who Am I</v-btn>
-    </div>
-    <div v-else>
       <v-progress-circular indeterminate />
-    </div>
   </div>
 </template>
 
@@ -29,13 +18,13 @@ export default {
     },
   },
 
-  data: () => ({
-    getMe
-  }),
 
   created () {
     if (this.user.email) {
-      this.getMe(this.user.email);
+      getMe(this.user.email)
+      .then(() => {
+        this.$router.push('explore')
+      });
     } else {
       this.$router.push('login')
     }

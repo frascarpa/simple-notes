@@ -3,7 +3,7 @@
     <note-list v-if="!id" :notes="notes" />
     <div v-else>
       <v-switch v-if="isMyNote" v-model="editMode" :label="'Edit mode'"></v-switch>
-      <v-card v-if="editMode" class="mx-auto create-group mb-12" outlined>
+      <v-card v-if="editMode" class="mx-auto create-group mb-4" outlined>
         <v-row>
           <v-col cols="5">
             <v-text-field v-model="detailedNote.title" label="Title *" :disabled="!isMyNote"></v-text-field>
@@ -17,11 +17,24 @@
           </v-col>
         </v-row>
       </v-card>
+      <v-card v-else class="mx-auto create-group mb-4" outlined>
+        <v-row>
+          <v-col cols="6">
+            <div >{{detailedNote.title}}</div>
+          </v-col>
+          <v-col cols="6">
+        <div class="font-weight-light pl-4">{{detailedNote.description}}</div>
+          </v-col>
+        </v-row>
+      </v-card>
       <v-card class="mx-auto create-group" outlined>
         <div v-if="editMode">
           <vue-editor v-model="detailedNote.content"></vue-editor>
         </div>
-        <div v-else v-html="detailedNote.content"></div>
+        <template v-else>
+          <div v-if="detailedNote.content" v-html="detailedNote.content"></div>
+          <v-subheader v-else>(Note Empty)</v-subheader>
+        </template>
       </v-card>
       <v-btn v-if="editMode" color="primary" :disabled="!detailedNote.title" @click="editNote">
         <v-icon>mdi-pencil</v-icon>Create Note
@@ -55,7 +68,7 @@ export default {
       id: null,
       title: null,
       description: null,
-      content: null,
+      content: null
     },
     editMode: false
   }),
@@ -70,7 +83,7 @@ export default {
   },
 
   watch: {
-    id:{
+    id: {
       handler(newId) {
         if (newId) {
           getNoteDetails(this.id).then(({ data }) => {
@@ -78,7 +91,7 @@ export default {
           });
         }
       },
-      immediate:true,
+      immediate: true
     },
     isMyNote(newVal, oldVal) {
       if (newVal !== oldVal && newVal) {
@@ -94,24 +107,24 @@ export default {
   },
 
   methods: {
-    fetchCurrentNote(){
-        getNoteDetails(this.id).then(({ data }) => {
-          this.detailedNote = data.data;
-        });
+    fetchCurrentNote() {
+      getNoteDetails(this.id).then(({ data }) => {
+        this.detailedNote = data.data;
+      });
     },
     editNote() {
       const { id, title, description, content } = this.detailedNote;
       editNote(id, title, description, content)
-      .then(() => this.fetchCurrentNote())
-      .then(()=>{
-        this.$notify({
+        .then(() => this.fetchCurrentNote())
+        .then(() => {
+          this.$notify({
             type: "success",
             group: "info",
             title: "Error",
-            text: "Note saved",
-          })
+            text: "Note saved"
+          });
           this.editMode = false;
-      });
+        });
     }
   }
 };
