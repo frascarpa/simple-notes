@@ -3,9 +3,8 @@
     <v-container>
       <v-card class="mx-auto create-group mb-4" outlined>
         <v-row justify="center">
-          <div class=" mb-4">Create a new Entity</div>
+          <v-subheader class=" mb-4">Create a new Entity</v-subheader>
         </v-row>
-          <v-divider/>
         <v-row>
           <create-course @created="fetchCourses" />
           <create-lesson @created="fetchLessons" />
@@ -13,7 +12,7 @@
       </v-card>
       <v-card class="mx-auto create-group" outlined>
         <v-row justify="center">
-          <div class=" mb-4">Or add a new note</div>
+          <v-subheader class=" mb-4">Or create a new note</v-subheader>
         </v-row>
           <v-divider/>
         <v-row>

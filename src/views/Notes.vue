@@ -2,7 +2,16 @@
   <div>
     <note-list v-if="!id" :notes="notes" />
     <div v-else>
-      <v-switch v-if="isMyNote" v-model="editMode" :label="'Edit mode'"></v-switch>
+      <v-row>
+        <v-col cols="6">
+          <v-switch class="mt-0" v-if="isMyNote" v-model="editMode" :label="'Edit mode'"></v-switch>
+        </v-col>
+        <v-col cols="6">
+          <v-btn v-if="editMode" color="primary" :disabled="!detailedNote.title" @click="editNote">
+            <v-icon>mdi-floppy</v-icon> Save Note
+          </v-btn>
+      </v-col>
+      </v-row>
       <v-card v-if="editMode" class="mx-auto create-group mb-4" outlined>
         <v-row>
           <v-col cols="5">
@@ -32,13 +41,10 @@
           <vue-editor v-model="detailedNote.content"></vue-editor>
         </div>
         <template v-else>
-          <div v-if="detailedNote.content" v-html="detailedNote.content"></div>
+          <span style="overflow: scroll" v-if="detailedNote.content" v-html="detailedNote.content"></span>
           <v-subheader v-else>(Note Empty)</v-subheader>
         </template>
       </v-card>
-      <v-btn v-if="editMode" color="primary" :disabled="!detailedNote.title" @click="editNote">
-        <v-icon>mdi-pencil</v-icon>Create Note
-      </v-btn>
     </div>
   </div>
 </template>
@@ -120,8 +126,8 @@ export default {
           this.$notify({
             type: "success",
             group: "info",
-            title: "Error",
-            text: "Note saved"
+            title: "Note saved",
+            text: "Well done!"
           });
           this.editMode = false;
         });

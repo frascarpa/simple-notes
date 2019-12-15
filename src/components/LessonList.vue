@@ -1,6 +1,7 @@
 <template>
 <div>
-        <v-expansion-panels class="mb-4">
+        <v-subheader v-if="lessons.length" >LESSONS</v-subheader>
+        <v-expansion-panels class="mb-4" accordion>
         <v-expansion-panel v-for="lesson in lessons" :key="lesson.id">
           <v-expansion-panel-header expand-icon="mdi-menu-down">
             {{lesson.name}}

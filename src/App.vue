@@ -58,7 +58,7 @@
           </v-list-item>
           <v-list-item link @click="$router.push({name:'search'})" >
             <v-list-item-action>
-              <v-icon>mdi-search</v-icon>
+              <v-icon>mdi-magnify</v-icon>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>Search</v-list-item-title>
@@ -80,7 +80,6 @@
 
     <v-content>
       <v-container
-        class="fill-height"
         fluid
       >
         <v-row
@@ -93,12 +92,6 @@
         </v-row>
       </v-container>
     </v-content>
-    <v-footer
-      color="indigo"
-      app
-    >
-      <span class="white--text">&copy; 2019</span>
-    </v-footer>
     <notifications position="bottom center" width="100%" group="info" />
   </v-app>
 </template>

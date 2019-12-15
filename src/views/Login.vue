@@ -37,7 +37,9 @@
                     label="Password"
                     name="password"
                     prepend-icon="lock"
-                    type="password"
+                    :append-icon="showPw ? 'mdi-eye' : 'mdi-eye-off'"
+                    :type="showPw ? 'text' : 'password'"
+                    @click:append="showPw = !showPw"
                   />
                 </v-form>
               </v-card-text>
@@ -61,6 +63,7 @@ export default {
       email: null,
       password: null,
       error:false,
+      showPw:false,
   }),
 
   created() {
