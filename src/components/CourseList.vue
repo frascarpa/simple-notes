@@ -2,14 +2,16 @@
 <div>
         <v-expansion-panels class="mb-12">
         <v-expansion-panel v-for="course in courses" :key="course.id">
-          <v-expansion-panel-header expand-icon="mdi-menu-down">{{course.name}}</v-expansion-panel-header>
+          <v-expansion-panel-header expand-icon="mdi-menu-down">
+              {{course.name}}
+            <div class="font-weight-light  pl-4">{{course.description}}</div>
+              </v-expansion-panel-header>
           <v-expansion-panel-content>
-              <div> {{course.description}}</div>
               <lesson-list :lessons="recordLessons[course.id]" />
 
           </v-expansion-panel-content>
         </v-expansion-panel>
-      <div v-if="!courses.length">No courses found</div>
+      <v-subheader v-if="!courses.length">No courses found</v-subheader>
       </v-expansion-panels>
 </div>
 </template>

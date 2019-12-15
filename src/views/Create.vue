@@ -47,8 +47,7 @@
         </v-row>
         <v-row>
           <v-col cols="12">
-            <v-btn color="primary"
-              :disabled="!canCreateNote">
+            <v-btn color="primary" :disabled="!canCreateNote" @click="createNote">
               <v-icon>mdi-pencil</v-icon>Create Note
             </v-btn>
           </v-col>
@@ -59,7 +58,7 @@
 </template>
 
 <script>
-import { getCourses, getLessons } from "@/api.js";
+import { getCourses, getLessons, createNote } from "@/api.js";
 import { groupBy } from "@/utils.js";
 import CreateCourse from "@/components/CreateCourse.vue";
 import CreateLesson from "@/components/CreateLesson.vue";
@@ -84,8 +83,8 @@ export default {
   },
 
   mounted() {
-    getCourses().then(({ data }) => (this.courses = data.data));
-    getLessons().then(({ data }) => (this.lessons = data.data));
+    this.fetchCourses();
+    this.fetchLessons();
   },
 
   computed: {
@@ -113,6 +112,9 @@ export default {
     },
     fetchLessons() {
       getLessons().then(({ data }) => (this.lessons = data.data));
+    },
+    createNote() {
+      createNote(this.title, this.description, this.selectedLesson)
     }
   }
 };

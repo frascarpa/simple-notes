@@ -52,7 +52,6 @@ class LessonController{
         } else {
             $courseExists = $_SESSION['database']->getCourseById($courseId);
             $lessonExists = $_SESSION['database']->lessonExists($name);
-            var_dump($lessonExists);
             if ($courseExists && !$lessonExists) {
                 $created = $_SESSION['database']->createLesson($name, $description, $courseId, $user);
                 Response::send(200, $created);

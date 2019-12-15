@@ -13,6 +13,7 @@ class Database{
     private $user_table = "users";
     private $course_table = "courses";
     private $lesson_table = "lessons";
+    private $note_table = "notes";
 
     function __construct(){
         try{
@@ -160,6 +161,89 @@ class Database{
         return false;
      
     }
+
+    // NOTES queries
+
+    public function getAllNotes() {
+        $sql = "SELECT lesson_id, title, description
+        FROM " . $this->note_table;
+        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function noteExists($title, $lesson_id) {
+        $sql = "SELECT *
+        FROM " . $this->note_table . "
+        WHERE title = :title AND lesson_id = :lesson_id";
+        $sth = $this->pdo->prepare($sql);
+        $sth->execute(array(':title' => $title, ':lesson_id' => $lesson_id));
+        $result = $sth->fetch(PDO::FETCH_OBJ);
+
+        return $result;
+     
+
+    }
+    public function getNotesByLessons($noteId) {
+        $sql = "SELECT *
+        FROM " . $this->note_table . "
+        WHERE lesson_id = :id";
+        $sth = $this->pdo->prepare($sql);
+        $sth->execute(array(':id' => $lessonId));
+        $result = $sth->fetchAll(PDO::FETCH_OBJ);
+
+        return $result;
+    }
+     
+    public function getNoteDetails($noteId) {
+        $sql = "SELECT *
+        FROM " . $this->note_table . "
+        WHERE id = :id";
+        $sth = $this->pdo->prepare($sql);
+        $sth->execute(array(':id' => $noteId));
+        $result = $sth->fetch(PDO::FETCH_OBJ);
+
+        return $result;
+     
+    }
+
+    public function createNote($title, $description, $lessonId, $user) {
+        $sql = "INSERT INTO " . $this->note_table . "(title,description,lesson_id,user_id)
+        VALUES( :title, :description, :lessonId, :userId)";
+        $sth = $this->pdo->prepare($sql);
+        if($sth->execute(array(
+            ':title' => $title,
+            ':description' => $description,
+            ':lessonId' => $lessonId,
+            ':userId' => $user->id,
+        )))
+            {
+            return $this->noteExists($title, $lessonId);
+        }
+        return false;
+     
+    }
+
+    public function editNote($noteId, $title, $description = '', $content, $contentClean) {
+        $sql = "UPDATE " . $this->note_table .
+        "SET title = :title,
+        description = :description,
+        content = :content,
+        content_clean = :contentClean
+        WHERE id = :noteId
+        ";
+        $sth = $this->pdo->prepare($sql);
+        if($sth->execute(array(
+            ':title' => $title,
+            ':description' => $description,
+            ':content' => $content,
+            ':content_clean' => $contentClean,
+        )))
+            {
+            return $this->noteExists($$title, $lessonId);
+        }
+        return false;
+     
+    }
+
 
 }
 ?>

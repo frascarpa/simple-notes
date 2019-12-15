@@ -68,6 +68,41 @@ function createLesson(name, description, courseId){
     });
 }
 
+function getNotes(){
+    return instance.get('notes/all');
+}
+
+function createNote(title, description, lessonId){
+    return instance.post('notes/create', {
+        title,
+        description,
+        lessonId,
+    });
+}
+
+function getNoteDetails(noteId){
+    return instance.get('notes/all',
+    {params:{
+        noteId,
+    }});
+}
+
+function getNotesByLesson(lessonId){
+    return instance.get('notes/bylesson',
+    {params:{
+        lessonId,
+    }});
+}
+
+function editNote(noteId, title, description, content){
+    return instance.post('notes/edit', {
+        title,
+        description,
+        noteId,
+        content,
+    });
+}
+
 
 
 
@@ -75,8 +110,16 @@ export {
     login,
     getMe,
     register,
+    ///
     getCourses,
     createCourse,
+    ///
     getLessons,
     createLesson,
+    ///
+    getNotes,
+    createNote,
+    getNoteDetails,
+    getNotesByLesson,
+    editNote,
 }
