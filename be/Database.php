@@ -170,6 +170,18 @@ class Database{
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_OBJ);
     }
 
+    public function getMyNotes($userId) {
+        $sql = "SELECT *
+        FROM " . $this->note_table . "
+        WHERE user_id = :userId ";
+        $sth = $this->pdo->prepare($sql);
+        $sth->execute(array(':userId' => $userId));
+        $result = $sth->fetchAll(PDO::FETCH_OBJ);
+
+        return $result;
+        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_OBJ);
+    }
+
     public function noteExists($title, $lesson_id) {
         $sql = "SELECT *
         FROM " . $this->note_table . "

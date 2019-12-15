@@ -5,6 +5,7 @@ import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
 import Explore from '@/views/Explore.vue'
 import Create from '@/views/Create.vue'
+import Notes from '@/views/Notes.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,12 @@ const routes = [
     path: '/create',
     name: 'create',
     component: Create
+  },
+  {
+    path: '/notes/:id?',
+    name: 'notes',
+    component: Notes,
+    props: true,
   },
 ]
 

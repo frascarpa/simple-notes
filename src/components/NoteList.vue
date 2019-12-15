@@ -7,6 +7,7 @@
       <v-subheader v-else >NO NOTES AVAILABLE</v-subheader>
       <v-list-item-group color="primary">
         <v-list-item
+        link @click="$router.push({ name: 'notes', params: { id: note.id }})"
           v-for="note in notes"
           :key="note.id">
           <v-list-item-icon>

@@ -16,7 +16,9 @@
             $this->method = $server['REQUEST_METHOD'];
             $this->uri = $server['REQUEST_URI'];
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-                $this->data = (object) $_GET;
+                parse_str(parse_url($this->uri, PHP_URL_QUERY), $dataArr);
+                
+                $this->data = (object) $dataArr;
             } else {
                 $this->data = json_decode(file_get_contents('php://input'));
             }

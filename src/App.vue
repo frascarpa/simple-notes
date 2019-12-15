@@ -5,7 +5,7 @@
       app
     >
       <v-list dense>
-        <v-list-item link  @click="$router.push('/')">
+        <v-list-item link  @click="$router.push({name:'/'})">
           <v-list-item-action>
               <v-icon>mdi-home</v-icon>
             </v-list-item-action>
@@ -14,7 +14,7 @@
             </v-list-item-content>
         </v-list-item>
         <template v-if="!user.isLogged">
-          <v-list-item link @click="$router.push('login')">
+          <v-list-item link @click="$router.push({name:'login'})">
             <v-list-item-action>
               <v-icon>mdi-login</v-icon>
             </v-list-item-action>
@@ -22,7 +22,7 @@
               <v-list-item-title>Login</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item link @click="$router.push('register')">
+          <v-list-item link @click="$router.push({name:'register'})">
             <v-list-item-action>
               <v-icon>mdi-register</v-icon>
             </v-list-item-action>
@@ -32,7 +32,7 @@
           </v-list-item>
         </template>
         <template v-else>
-          <v-list-item link @click="$router.push('login')">
+          <v-list-item link @click="$router.push({name:'login'})">
             <v-list-item-action>
               <v-icon>mdi-logout</v-icon>
             </v-list-item-action>
@@ -40,7 +40,7 @@
               <v-list-item-title>Logout</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item link @click="$router.push('explore')">
+          <v-list-item link @click="$router.push({name:'explore'})">
             <v-list-item-action>
               <v-icon>mdi-compass</v-icon>
             </v-list-item-action>
@@ -48,7 +48,7 @@
               <v-list-item-title>Explore</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item link @click="$router.push('create')">
+          <v-list-item link @click="$router.push({name:'create'})">
             <v-list-item-action>
               <v-icon>mdi-creation</v-icon>
             </v-list-item-action>
@@ -56,12 +56,12 @@
               <v-list-item-title>Create</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item link >
+          <v-list-item link @click="$router.push({name:'notes'})" >
             <v-list-item-action>
               <v-icon>mdi-pencil</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>New Note</v-list-item-title>
+              <v-list-item-title>Notes</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </template>

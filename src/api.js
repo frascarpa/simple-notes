@@ -72,6 +72,10 @@ function getNotes(){
     return instance.get('notes/all');
 }
 
+function getMyNotes(){
+    return instance.get('notes/my');
+}
+
 function createNote(title, description, lessonId){
     return instance.post('notes/create', {
         title,
@@ -81,7 +85,7 @@ function createNote(title, description, lessonId){
 }
 
 function getNoteDetails(noteId){
-    return instance.get('notes/all',
+    return instance.get('notes/details',
     {params:{
         noteId,
     }});
@@ -118,6 +122,7 @@ export {
     createLesson,
     ///
     getNotes,
+    getMyNotes,
     createNote,
     getNoteDetails,
     getNotesByLesson,

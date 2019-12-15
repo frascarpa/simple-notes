@@ -1,6 +1,6 @@
 <?php
     class Response {
-        public static function send(int $code, array $data) {
+        public static function send(int $code, $data) {
             // foreach ($headers as $key => $value) {
             //     header("$key: $value");
             // }

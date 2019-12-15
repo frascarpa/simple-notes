@@ -13,6 +13,9 @@ class NoteController{
             if ($request->isAction('details')) {
                 NoteController::details($request);
             }
+            if ($request->isAction('my')) {
+                NoteController::myNotes($request);
+            }
 
         }
         if($request->isMethod('post')){
@@ -31,8 +34,15 @@ class NoteController{
         Response::send(200, $notes);
     }
 
+    private static function myNotes($request) {
+        $user =  Auth::authMiddleware($request);
+        $notes = $_SESSION['database']->getMyNotes($user->id);
+        Response::send(200, $notes);
+    }
+
     private static function getByLesson($request) {
         $user =  Auth::authMiddleware($request);
+        $data = $request->getData();
         $lessonId = $data->lessonId;
 
         if (empty($lessonId)) {
@@ -45,7 +55,9 @@ class NoteController{
 
     private static function details($request) {
         $user =  Auth::authMiddleware($request);
-        $noteId = $data->noteId;
+        $data = $request->getData();
+        
+        $noteId = (int) $data->noteId;
 
         if (empty($noteId)) {
             Response::send(422, array("error" => "missing fields"));
