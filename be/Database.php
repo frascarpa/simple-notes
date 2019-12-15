@@ -259,6 +259,41 @@ class Database{
      
     }
 
+    // SEARCH queries
+
+    public function searchExecute($columns, $table, $words) {
+        $select = "SELECT * FROM ". $table;
+        $where = " WHERE 1=0 ";
+
+        foreach ($columns as $col) {
+            foreach ($words as $word) {
+                $where = $where . " OR ". $col . " LIKE '%".$word."%'";
+            }
+        }
+        
+        $sql = $select . $where;
+        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_OBJ);
+     
+    }
+
+    public function searchCourses($words) {
+        $columns = ['name', 'description'];
+        $table = $this->course_table;
+        return $this->searchExecute($columns, $table, $words);
+    }
+
+    public function searchLessons($words) {
+        $columns = ['name', 'description'];
+        $table = $this->lesson_table;
+        return $this->searchExecute($columns, $table, $words);
+    }
+
+    public function searchNotes($words) {
+        $columns = ['title', 'description', 'content_clean'];
+        $table = $this->note_table;
+        return $this->searchExecute($columns, $table, $words);
+    }
+
 
 }
 ?>

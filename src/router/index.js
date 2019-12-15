@@ -6,6 +6,7 @@ import Register from '@/views/Register.vue'
 import Explore from '@/views/Explore.vue'
 import Create from '@/views/Create.vue'
 import Notes from '@/views/Notes.vue'
+import Search from '@/views/Search.vue'
 
 Vue.use(VueRouter)
 
@@ -40,6 +41,11 @@ const routes = [
     name: 'notes',
     component: Notes,
     props: true,
+  },
+  {
+    path: '/search',
+    name: 'search',
+    component: Search,
   },
 ]
 

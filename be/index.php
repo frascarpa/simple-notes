@@ -10,6 +10,7 @@
     require_once './api/controllers/course.php';
     require_once './api/controllers/lesson.php';
     require_once './api/controllers/note.php';
+    require_once './api/controllers/search.php';
 
     header("Access-Control-Allow-Origin: *");
 
@@ -38,6 +39,10 @@
 
     if ($request->isAction('/api/notes/')) {
         NoteController::handleRequest($request);
+    }
+
+    if ($request->isAction('/api/search/')) {
+        SearchController::handleRequest($request);
     }
     
 

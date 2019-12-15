@@ -107,6 +107,12 @@ function editNote(noteId, title, description, content){
     });
 }
 
+function search(query){
+    return instance.get('search/', {
+        params: {query},
+    });
+}
+
 
 
 
@@ -127,4 +133,6 @@ export {
     getNoteDetails,
     getNotesByLesson,
     editNote,
+    ///
+    search,
 }
