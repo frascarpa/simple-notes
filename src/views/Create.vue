@@ -115,6 +115,11 @@ export default {
     },
     createNote() {
       createNote(this.title, this.description, this.selectedLesson)
+      .then(({data}) => {
+        // eslint-disable-next-line
+        console.log(data)
+      this.$router.push({name: 'notes', params:{id: data.data.id}})
+      })
     }
   }
 };

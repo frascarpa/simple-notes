@@ -81,7 +81,7 @@ class NoteController{
             $noteExists = $_SESSION['database']->noteExists($title, $lessonId);
             if (!$noteExists) {
                 $created = $_SESSION['database']->createNote($title, $description, $lessonId, $user);
-                Response::send(200, array("status" => "note created"));
+                Response::send(200, $created);
             } else {
                 Response::send(422, array("error" => "note already exists"));
             }
@@ -101,12 +101,12 @@ class NoteController{
             Response::send(422, array("error" => "missing fields"));
         } else {
             $noteExists = $_SESSION['database']->getNoteDetails($noteId);
-            if (!$noteExists) {
+            if ($noteExists) {
                 $contentClean = strip_tags($content);
                 $edited = $_SESSION['database']->editNote($noteId, $title, $description, $content, $contentClean);
                 Response::send(200, array("status" => "note saved"));
             } else {
-                Response::send(422, array("error" => "note already exists"));
+                Response::send(422, array("error" => "note does not exists"));
             }
         }
     }

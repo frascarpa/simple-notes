@@ -165,7 +165,7 @@ class Database{
     // NOTES queries
 
     public function getAllNotes() {
-        $sql = "SELECT lesson_id, title, description
+        $sql = "SELECT *
         FROM " . $this->note_table;
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_OBJ);
     }
@@ -234,23 +234,26 @@ class Database{
      
     }
 
-    public function editNote($noteId, $title, $description = '', $content, $contentClean) {
+    public function editNote($noteId, $title, $description = '', $content, $content_clean) {
         $sql = "UPDATE " . $this->note_table .
-        "SET title = :title,
+        " SET title = :title,
         description = :description,
         content = :content,
-        content_clean = :contentClean
-        WHERE id = :noteId
-        ";
+        content_clean = :content_clean
+        WHERE id = :noteId;";
+        var_dump($noteId, $title, $description, $content, $content_clean);
         $sth = $this->pdo->prepare($sql);
-        if($sth->execute(array(
+        $sth->errorInfo();
+        $res = $sth->execute(array(
             ':title' => $title,
             ':description' => $description,
             ':content' => $content,
-            ':content_clean' => $contentClean,
-        )))
+            ':content_clean' => $content_clean,
+            ':noteId' => $noteId,
+        ));
+        if($res)
             {
-            return $this->noteExists($$title, $lessonId);
+            return $this->noteExists($title, $lessonId);
         }
         return false;
      
