@@ -80,6 +80,7 @@ export default {
                 .then(() => {
                     this.dialog = false;
                     this.$emit('created');
+                    this.notifyEntityCreated();
                     })
                     .catch((err) => {
                         this.$notify({
@@ -90,8 +91,16 @@ export default {
                         });
                     });
 
-        }
-    },
+        },
+        notifyEntityCreated() {
+          this.$notify({
+              type: "success",
+              group: "info",
+              title: "Done!",
+              text: "New entity created"
+            });
+        },
+    }
 }
 </script>
 

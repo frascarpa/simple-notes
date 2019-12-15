@@ -120,14 +120,6 @@ export default {
       this.$router.push({name: 'notes', params:{id: data.data.id}})
       })
     },
-    notifyEntityCreated() {
-        this.$notify({
-            type: "success",
-            group: "info",
-            title: "Done!",
-            text: "New entity created"
-          });
-    }
   }
 };
 </script>
