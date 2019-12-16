@@ -14,6 +14,7 @@ class Database{
     private $course_table = "courses";
     private $lesson_table = "lessons";
     private $note_table = "notes";
+    private $history_table = "audit";
 
     function __construct(){
         try{
@@ -292,6 +293,15 @@ class Database{
         $columns = ['title', 'description', 'content_clean'];
         $table = $this->note_table;
         return $this->searchExecute($columns, $table, $words);
+    }
+
+    // HISTORY queries
+
+    public function getHistory() {
+        $sql = "SELECT * FROM " . $this->history_table . 
+        " ORDER BY time desc LIMIT 50";
+        // var_dump($sql);
+        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_OBJ);
     }
 
 

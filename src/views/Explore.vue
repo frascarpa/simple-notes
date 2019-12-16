@@ -1,19 +1,22 @@
 <template>
   <div>
-    <div>Explore</div>
-      <course-list :courses="courses" />
+    <course-list v-if="courses.length" label="EXPLORE AND FIND YOUR NOTE" :courses="courses" />
+    <v-subheader link v-else>First, you need to create a course, and possibly a lesson too.</v-subheader >
+    <history/>
   </div>
 </template>
 
 <script>
 import { getCourses } from "@/api.js";
 import CourseList from "@/components/CourseList.vue";
+import History from "@/components/History.vue";
 
 export default {
   nane: "Explore",
 
   components: {
-    CourseList
+    CourseList,
+    History,
   },
 
   data() {

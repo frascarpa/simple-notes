@@ -1,6 +1,6 @@
 <template>
 <div>
-        <v-subheader v-if="courses.length" >COURSES</v-subheader>
+        <v-subheader v-if="courses.length" >{{label}}</v-subheader>
         <v-expansion-panels class="mb-12"
         accordion >
         <v-expansion-panel v-for="course in courses" :key="course.id">
@@ -34,6 +34,10 @@ props: {
      courses: {
          type: Array,
          default: () => []
+     },
+     label: {
+         type: String,
+         default: () => 'COURSES',
      },
  },
 

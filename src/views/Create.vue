@@ -1,20 +1,14 @@
 <template>
   <div>
-    <v-container>
+      <v-subheader v-if="courses.length" >CREATE A NEW ENTITY</v-subheader>
       <v-card class="mx-auto create-group mb-4" outlined>
-        <v-row justify="center">
-          <v-subheader class=" mb-4">Create a new Entity</v-subheader>
-        </v-row>
         <v-row>
           <create-course @created="fetchCourses" />
           <create-lesson @created="fetchLessons" />
         </v-row>
       </v-card>
+      <v-subheader class="">OR CREATE A NEW NOTE</v-subheader>
       <v-card class="mx-auto create-group" outlined>
-        <v-row justify="center">
-          <v-subheader class=" mb-4">Or create a new note</v-subheader>
-        </v-row>
-          <v-divider/>
         <v-row>
           <v-col cols="5">
             <v-text-field v-model="title" label="Title *" required></v-text-field>
@@ -54,7 +48,7 @@
           </v-col>
         </v-row>
       </v-card>
-    </v-container>
+
   </div>
 </template>
 

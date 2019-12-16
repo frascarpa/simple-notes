@@ -1,6 +1,6 @@
 <template>
   <div>
-    <note-list v-if="!id" :notes="notes" />
+    <note-list v-if="!id" :label="'HERE ARE YOUR NOTES'" :notes="notes" />
     <div v-else>
       <v-row>
         <v-col cols="6">

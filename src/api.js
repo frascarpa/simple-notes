@@ -112,6 +112,9 @@ function search(query){
         params: {query},
     });
 }
+function getHistory(){
+    return instance.get('history/');
+}
 
 
 
@@ -135,4 +138,6 @@ export {
     editNote,
     ///
     search,
+    ///
+    getHistory
 }

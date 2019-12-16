@@ -1,8 +1,8 @@
 <template>
 <div>
-      <v-subheader v-if="notes.length" >NOTES</v-subheader>
-      <v-subheader v-else >NO NOTES AVAILABLE</v-subheader>
-<v-card
+      <v-subheader v-if="notes.length" >{{label}}</v-subheader>
+      <v-subheader v-else >No notes found</v-subheader>
+<v-card v-if="notes.length"
     class="mx-auto"
     tile>
     <v-list dense>
@@ -34,6 +34,10 @@ export default {
      notes: {
          type: Array,
          default: () => []
+     },
+    label: {
+         type: String,
+         default: () => 'NOTES',
      },
  },
 
