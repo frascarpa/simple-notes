@@ -2,10 +2,8 @@ import axios from 'axios';
 import router from './router'
 
 
-const restUrl = 'http://localhost:8088/~francesco/api/'
-
 const instance = axios.create({
-    baseURL: restUrl,
+    baseURL: 'http://localhost:8087/api',
     headers: {
       "Access-Control-Allow-Origin": "*",
       'content-type': 'application/json', 
@@ -28,7 +26,7 @@ function login(email, password){
         email,
         password,
     }).then((resp) => {
-        instance.defaults.headers.common['Authorization'] = `${resp.data.data.jwt}`
+        instance.defaults.headers.common['authorization'] = `${resp.data.data.jwt}`;
         return resp;
     })
 }

@@ -1,13 +1,10 @@
 #  BE
-serve the be folder with apache on port 8088.
-
-With postman, call http://localhost:8088/~fscarpa/api/create_user.php
-
-make a post call: body: raw and send the user fields (nickname, email, password)
+serve the `be` folder on port 8088. (make sure htaccess rewrite is working properly)
 
 backup db with `pg_dump -h localhost -U postgres simple-notes > db.sql`
 restore db with `psql -h localhost -U postgres -d simple-notes < db.sql`
 
+run `composer install` for installing the JWT dependency needed for authentication. 
 
 # FE
 
@@ -20,13 +17,6 @@ npm install
 ```
 npm run serve
 ```
+Configure the baseurl inside api.js with the proper FE webserver address (all the requests will be proxied to BE).
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
+Configure vue.config.js with the proper address of the BE api endpoint, to be used as target of the proxy.

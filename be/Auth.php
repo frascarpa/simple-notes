@@ -27,9 +27,8 @@ class Auth {
         return JWT::encode($payload, Auth::getKey());
     }
 
-    // this function will return the user data, encoded in the jwt
     public static function authMiddleware($req) {
-        $jwt = $req->getHeaders()['Authorization'];
+        $jwt = $req->getHeaders()['authorization'];
         return Auth::checkJwtValid($jwt);
     }
 
