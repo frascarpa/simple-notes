@@ -63,7 +63,8 @@ export default {
       return this.$store.getters.getUser;
     },
     displayLessons() {
-        return this.lessons.filter((l) => !this.deleted.includes(l.id));
+        return this.lessons.filter((l) => !this.deleted.includes(l.id))
+          .sort((a,b) => new Date(a.date) - new Date(b.date));
     }
   },
 
