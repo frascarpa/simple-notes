@@ -5,7 +5,7 @@
         <v-expansion-panel v-for="lesson in lessons" :key="lesson.id">
           <v-expansion-panel-header expand-icon="mdi-menu-down">
             {{lesson.name}}
-            <div class="font-weight-light pl-4">{{lesson.description}}</div>
+            <div class="font-weight-light pl-4">{{humanDate(lesson.date)}} - {{lesson.description}}</div>
             </v-expansion-panel-header>
           <v-expansion-panel-content>
               <note-list :notes="recordNotes[lesson.id]"/>
@@ -18,7 +18,7 @@
 
 <script>
 import { getNotes } from '@/api.js';
-import { groupBy } from '@/utils.js';
+import { groupBy, dateFormattedFromISO } from '@/utils.js';
 import NoteList from '@/components/NoteList.vue'
 
 export default {
@@ -49,7 +49,14 @@ export default {
  mounted() {
     getNotes()
         .then(({ data }) => (this.notes = data.data));
-}
+},
+
+methods: {
+  humanDate(date) {
+    return dateFormattedFromISO(date)
+    
+  }
+},
 
 }
 </script>

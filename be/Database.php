@@ -146,15 +146,16 @@ class Database{
         return $sth->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function createLesson($name, $description, $courseId, $user) {
-        $sql = "INSERT INTO " . $this->lesson_table . "(name,description,course_id,user_id)
-        VALUES( :name, :description, :courseId, :userId)";
+    public function createLesson($name, $description, $courseId, $date, $user) {
+        $sql = "INSERT INTO " . $this->lesson_table . "(name,description,course_id,user_id, date)
+        VALUES( :name, :description, :courseId, :userId, :date)";
         $sth = $this->pdo->prepare($sql);
         if($sth->execute(array(
             ':name' => $name,
             ':description' => $description,
             ':courseId' => $courseId,
             ':userId' => $user->id,
+            ':date' => $date,
         )))
             {
             return $this->lessonExists($name);

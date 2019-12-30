@@ -24,7 +24,29 @@
             </v-row>
             
             <v-row>
-              <v-col cols="12">
+              <v-col cols="12" lg="5" md="5" >
+                <v-menu
+                  ref="dateMenu"
+                  v-model="dateMenu"
+                  :close-on-content-click="false"
+                  :return-value.sync="date"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="290px">
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      v-model="dateFormatted"
+                      label="Date of Lesson *"
+                      prepend-inner-icon="event"
+                      readonly
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker @input="selectDate" v-model="date" no-title scrollable>
+                  </v-date-picker>
+                </v-menu>
+              </v-col>
+              <v-col cols="12" lg="7" md="7" >
                     <v-select
                       v-model="selectedCourse"
                       :items="courses"
@@ -51,6 +73,7 @@
 <script>
 
 import { createLesson, getCourses } from '@/api.js';
+import { dateFormattedFromISO } from '@/utils.js';
 
 export default {
     name: 'create-lesson',
@@ -62,6 +85,8 @@ export default {
             description: null,
             courses: [],
             selectedCourse: null,
+            date: new Date().toISOString().substr(0, 10),
+            dateMenu: false,
         };
     },
 
@@ -73,10 +98,20 @@ export default {
         
       }
     },
+
+    computed: {
+      dateFormatted() {
+        return dateFormattedFromISO(this.date)
+      },
+    },
     
     methods: {
+        selectDate(){
+          this.$refs.dateMenu.save(this.date);
+          this.dateMenu = false;
+        },
         create() {
-            createLesson(this.name, this.description, this.selectedCourse)
+            createLesson(this.name, this.description, this.selectedCourse, this.date)
                 .then(() => {
                     this.dialog = false;
                     this.$emit('created');

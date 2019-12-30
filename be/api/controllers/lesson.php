@@ -46,14 +46,15 @@ class LessonController{
         $name = $data->name;
         $description = $data->description;
         $courseId = $data->courseId;
+        $date = $data->date;
 
-        if (empty($name) | empty($courseId)) {
+        if (empty($name) | empty($courseId) | empty($date)) {
             Response::send(422, array("error" => "missing fields"));
         } else {
             $courseExists = $_SESSION['database']->getCourseById($courseId);
             $lessonExists = $_SESSION['database']->lessonExists($name);
             if ($courseExists && !$lessonExists) {
-                $created = $_SESSION['database']->createLesson($name, $description, $courseId, $user);
+                $created = $_SESSION['database']->createLesson($name, $description, $courseId, $date, $user);
                 Response::send(200, $created);
             } else {
                 Response::send(422, array("error" => "invalid course"));

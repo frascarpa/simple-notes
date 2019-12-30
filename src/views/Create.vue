@@ -10,10 +10,10 @@
       <v-subheader class="">OR CREATE A NEW NOTE</v-subheader>
       <v-card class="mx-auto create-group" outlined>
         <v-row>
-          <v-col cols="5">
+          <v-col cols="5" md="5" sm="12">
             <v-text-field v-model="title" label="Title *" required></v-text-field>
           </v-col>
-          <v-col cols="7">
+          <v-col cols="7" md="7" sm="12">
             <v-text-field v-model="description" label="Description"></v-text-field>
           </v-col>
         </v-row>
@@ -35,7 +35,7 @@
               v-model="selectedLesson"
               :items="recordLessons[selectedCourse]"
               label="Lesson *"
-              item-text="name"
+              item-text="display"
               item-value="id"
             ></v-select>
           </v-col>
@@ -54,7 +54,7 @@
 
 <script>
 import { getCourses, getLessons, createNote } from "@/api.js";
-import { groupBy } from "@/utils.js";
+import { groupBy, dateFormattedFromISO } from "@/utils.js";
 import CreateCourse from "@/components/CreateCourse.vue";
 import CreateLesson from "@/components/CreateLesson.vue";
 
@@ -84,7 +84,11 @@ export default {
 
   computed: {
     recordLessons() {
-      return groupBy(this.lessons, "course_id");
+      return groupBy(
+        this.lessons.map((l) => {
+          l.display = l.name + ' - ' + dateFormattedFromISO(l.date)
+          return l;
+        }), "course_id");
     },
     canCreateNote() {
       return (

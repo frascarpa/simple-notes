@@ -58,11 +58,12 @@ function getLessons(){
     return instance.get('lessons/all');
 }
 
-function createLesson(name, description, courseId){
+function createLesson(name, description, courseId, date){
     return instance.post('lessons/create', {
         name,
         description,
         courseId,
+        date,
     });
 }
 
