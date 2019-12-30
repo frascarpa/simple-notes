@@ -67,20 +67,15 @@ export default {
   }),
 
   created() {
-    this.logout();
+    this.$store.commit('logout');
   },
 
   methods: {
-    logout(){
-      this.$emit('logout')
-    },
       doLogin() {
           return login(this.email, this.password)
             .then(({data})=>{
-              this.$emit('logged-in',{
-                isLogged: true,
-                email: data.data.email,
-              });
+              this.$store.commit('setUser', data.data);
+              this.$router.push('/');
               }).catch((err)=>{
                 this.$notify({
                   type: 'error',

@@ -5,7 +5,7 @@
       app
     >
       <v-list dense>
-        <template v-if="!user.isLogged">
+        <template v-if="!user">
           <v-list-item link @click="$router.push({name:'login'})">
             <v-list-item-action>
               <v-icon>mdi-login</v-icon>
@@ -87,7 +87,7 @@
           justify="center"
         >
           <v-col class="text-center">
-              <router-view :user="user"  @logout="logout" @logged-in="setLoggedIn"></router-view>
+              <router-view></router-view>
           </v-col>
         </v-row>
       </v-container>
@@ -104,28 +104,13 @@ export default {
 
   data: () => ({
     drawer: false,
-    user: {
-        isLogged: false,
-        email: null,
-        nickname: null,
-      },
   }),
 
-  methods: {
-    createEmptyUser(){
-      return {
-        isLogged: false,
-        email: null,
-        nickname: null,
-      };
-    },
-    setLoggedIn(user) {
-      this.user = user;
-      this.$router.push('/');      
-    },
-    logout(){
-      this.user = this.createEmptyUser();
-    },
+  computed: {
+    user() {
+      return this.$store.getters.getUser;
+    }
   },
+
 };
 </script>

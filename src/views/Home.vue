@@ -10,17 +10,15 @@ import { getMe } from '@/api.js'
 
 export default {
   name: 'Home',
-
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
+  
+  computed: {
+    user() {
+      return this.$store.getters.getUser;
+    }
   },
 
-
   created () {
-    if (this.user.email) {
+    if (this.user) {
       getMe(this.user.email)
       .then(() => {
         this.$router.push('explore')

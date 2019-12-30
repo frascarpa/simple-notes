@@ -35,6 +35,7 @@ class UserController{
                 Response::send(200, array(
                     "jwt" => $jwt,
                     "nickname" => $user->nickname,
+                    "id" => $user->id,
                     "email" => $email
                 ));
 
@@ -49,7 +50,7 @@ class UserController{
         $user = Auth::authMiddleware($request);
         Response::send(200, array(
             "nickname" => $user->nickname,
-            "email" => $user->email
+            "email" => $user->email,
         ));
     }
 
