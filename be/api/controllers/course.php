@@ -12,6 +12,9 @@ class CourseController{
             if ($request->isAction('create')) {
                 CourseController::create($request);
             }
+            if ($request->isAction('delete')) {
+                CourseController::delete($request);
+            }
         }
     }
 
@@ -38,6 +41,20 @@ class CourseController{
             } else {
                 Response::send(422, array("error" => "course already exists"));
             }
+        }
+    }
+
+    private static function delete($request) {
+        $user =  Auth::authMiddleware($request);
+        $data = $request->getData();
+
+        $id = $data->id;
+
+        if (empty($id)) {
+            Response::send(422, array("error" => "missing fields"));
+        } else {
+            $_SESSION['database']->deleteCourse($id);
+            Response::send(200, array("status" => "course deleted"));
         }
     }
 }

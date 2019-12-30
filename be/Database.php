@@ -83,6 +83,18 @@ class Database{
      
     }
 
+    public function deleteCourse($id) {
+        $sql = "DELETE
+        FROM " . $this->course_table . "
+        WHERE id = :id";
+        $sth = $this->pdo->prepare($sql);
+        $sth->execute(array(':id' => $id));
+        $result = $sth->fetch(PDO::FETCH_ASSOC);
+
+        return $result;
+     
+    }
+
     public function getCourseById($id) {
         $sql = "SELECT *
         FROM " . $this->course_table . "

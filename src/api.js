@@ -54,6 +54,12 @@ function createCourse(name, description){
     });
 }
 
+function deleteCourse(id){
+    return instance.post('courses/delete', {
+        id,
+    });
+}
+
 function getLessons(){
     return instance.get('lessons/all');
 }
@@ -125,6 +131,7 @@ export {
     ///
     getCourses,
     createCourse,
+    deleteCourse,
     ///
     getLessons,
     createLesson,

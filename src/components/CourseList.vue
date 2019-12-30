@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-subheader v-if="courses.length">{{label}}</v-subheader>
+    <v-subheader v-if="displayCourses.length">{{label}}</v-subheader>
     <v-expansion-panels class="mb-12" accordion>
-      <v-expansion-panel v-for="course in courses" :key="course.id">
+      <v-expansion-panel v-for="course in displayCourses" :key="course.id">
         <v-expansion-panel-header expand-icon="mdi-menu-down">
         <v-col cols="4">
             {{course.name}}
@@ -28,13 +28,13 @@
           <lesson-list :lessons="recordLessons[course.id]" />
         </v-expansion-panel-content>
       </v-expansion-panel>
-      <v-subheader v-if="!courses.length">No courses found</v-subheader>
+      <v-subheader v-if="!displayCourses.length">No courses found</v-subheader>
     </v-expansion-panels>
   </div>
 </template>
 
 <script>
-import { getLessons } from "@/api.js";
+import { getLessons, deleteCourse } from "@/api.js";
 import { groupBy } from "@/utils.js";
 import LessonList from "@/components/LessonList.vue";
 
@@ -58,7 +58,8 @@ export default {
 
   data() {
     return {
-      lessons: []
+      lessons: [],
+      deleted: [],
     };
   },
 
@@ -68,6 +69,9 @@ export default {
     },
     user() {
       return this.$store.getters.getUser;
+    },
+    displayCourses() {
+        return this.courses.filter((c) => !this.deleted.includes(c.id));
     }
   },
 
@@ -77,8 +81,16 @@ export default {
 
   methods: {
       deleteCourse(id) {
-          // eslint-disable-next-line 
-          console.log('delete', id);
+          deleteCourse(id)
+          .then(() => {
+            this.deleted.push(id);
+            this.$notify({
+              type: "success",
+              group: "info",
+              title: "Done!",
+              text: "Course Deleted"
+            });
+          })
       }
   },
 };
