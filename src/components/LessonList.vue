@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-subheader v-if="lessons.length">LESSONS</v-subheader>
+    <v-subheader v-if="displayLessons.length">LESSONS</v-subheader>
     <v-expansion-panels class="mb-4" accordion>
-      <v-expansion-panel v-for="lesson in lessons" :key="lesson.id">
+      <v-expansion-panel v-for="lesson in displayLessons" :key="lesson.id">
         <v-expansion-panel-header expand-icon="mdi-menu-down">
           <v-col cols="4">{{lesson.name}}</v-col>
           <v-col class="font-weight-light pl-4">{{humanDate(lesson.date)}} - {{lesson.description}}</v-col>
@@ -22,16 +22,16 @@
           </v-tooltip>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <note-list :notes="recordNotes[lesson.id]" />
+          <note-list @deleted="fetchNotes" :notes="recordNotes[lesson.id]" />
         </v-expansion-panel-content>
       </v-expansion-panel>
-      <v-subheader v-if="!lessons.length">No lessons found</v-subheader>
+      <v-subheader v-if="!displayLessons.length">No lessons found</v-subheader>
     </v-expansion-panels>
   </div>
 </template>
 
 <script>
-import { getNotes } from "@/api.js";
+import { getNotes, deleteLesson } from "@/api.js";
 import { groupBy, dateFormattedFromISO } from "@/utils.js";
 import NoteList from "@/components/NoteList.vue";
 
@@ -50,7 +50,8 @@ export default {
   },
   data() {
     return {
-      notes: []
+      notes: [],
+      deleted:[],
     };
   },
 
@@ -60,17 +61,37 @@ export default {
     },
     user() {
       return this.$store.getters.getUser;
+    },
+    displayLessons() {
+        return this.lessons.filter((l) => !this.deleted.includes(l.id));
     }
   },
 
   mounted() {
-    getNotes().then(({ data }) => (this.notes = data.data));
+    this.fetchNotes();
   },
 
   methods: {
+    fetchNotes(){
+      getNotes()
+        .then(({ data }) => (this.notes = data.data));
+    },
     humanDate(date) {
       return dateFormattedFromISO(date);
-    }
+    },
+    deleteLesson(id) {
+      deleteLesson(id)
+      .then(() => {
+            this.deleted.push(id);
+            this.$emit('deleted');
+            this.$notify({
+              type: "success",
+              group: "info",
+              title: "Done!",
+              text: "Lesson Deleted"
+            });
+          })
+      }
   }
 };
 </script>

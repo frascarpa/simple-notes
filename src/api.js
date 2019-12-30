@@ -60,6 +60,18 @@ function deleteCourse(id){
     });
 }
 
+function deleteLesson(id){
+    return instance.post('lessons/delete', {
+        id,
+    });
+}
+
+function deleteNote(id){
+    return instance.post('notes/delete', {
+        id,
+    });
+}
+
 function getLessons(){
     return instance.get('lessons/all');
 }
@@ -135,6 +147,7 @@ export {
     ///
     getLessons,
     createLesson,
+    deleteLesson,
     ///
     getNotes,
     getMyNotes,
@@ -142,6 +155,7 @@ export {
     getNoteDetails,
     getNotesByLesson,
     editNote,
+    deleteNote,
     ///
     search,
     ///

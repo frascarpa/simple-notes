@@ -144,6 +144,18 @@ class Database{
      
     }
 
+    public function deleteLesson($id) {
+        $sql = "DELETE
+        FROM " . $this->lesson_table . "
+        WHERE id = :id";
+        $sth = $this->pdo->prepare($sql);
+        $sth->execute(array(':id' => $id));
+        $result = $sth->fetch(PDO::FETCH_ASSOC);
+
+        return $result;
+     
+    }
+
     public function getAllLessons() {
         $sql = "SELECT *
         FROM " . $this->lesson_table;
@@ -226,6 +238,18 @@ class Database{
         $sth = $this->pdo->prepare($sql);
         $sth->execute(array(':id' => $noteId));
         $result = $sth->fetch(PDO::FETCH_OBJ);
+
+        return $result;
+     
+    }
+
+    public function deleteNote($id) {
+        $sql = "DELETE
+        FROM " . $this->note_table . "
+        WHERE id = :id";
+        $sth = $this->pdo->prepare($sql);
+        $sth->execute(array(':id' => $id));
+        $result = $sth->fetch(PDO::FETCH_ASSOC);
 
         return $result;
      

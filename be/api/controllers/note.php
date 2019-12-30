@@ -25,6 +25,9 @@ class NoteController{
             if ($request->isAction('edit')) {
                 NoteController::edit($request);
             }
+            if ($request->isAction('delete')) {
+                NoteController::delete($request);
+            }
         }
     }
 
@@ -108,6 +111,20 @@ class NoteController{
             } else {
                 Response::send(422, array("error" => "note does not exists"));
             }
+        }
+    }
+
+    private static function delete($request) {
+        $user =  Auth::authMiddleware($request);
+        $data = $request->getData();
+
+        $id = $data->id;
+
+        if (empty($id)) {
+            Response::send(422, array("error" => "missing fields"));
+        } else {
+            $_SESSION['database']->deleteNote($id);
+            Response::send(200, array("status" => "note deleted"));
         }
     }
 }

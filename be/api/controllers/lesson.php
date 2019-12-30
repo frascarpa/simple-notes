@@ -15,6 +15,9 @@ class LessonController{
             if ($request->isAction('create')) {
                 LessonController::create($request);
             }
+            if ($request->isAction('delete')) {
+                LessonController::delete($request);
+            }
         }
     }
 
@@ -61,4 +64,19 @@ class LessonController{
             }
         }
     }
+
+    private static function delete($request) {
+        $user =  Auth::authMiddleware($request);
+        $data = $request->getData();
+
+        $id = $data->id;
+
+        if (empty($id)) {
+            Response::send(422, array("error" => "missing fields"));
+        } else {
+            $_SESSION['database']->deleteLesson($id);
+            Response::send(200, array("status" => "lesson deleted"));
+        }
+    }
+
 }

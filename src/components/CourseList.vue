@@ -25,7 +25,7 @@
             </v-tooltip>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <lesson-list :lessons="recordLessons[course.id]" />
+          <lesson-list @deleted="fetchLessons" :lessons="recordLessons[course.id]" />
         </v-expansion-panel-content>
       </v-expansion-panel>
       <v-subheader v-if="!displayCourses.length">No courses found</v-subheader>
@@ -76,13 +76,17 @@ export default {
   },
 
   mounted() {
-    getLessons().then(({ data }) => (this.lessons = data.data));
+      this.fetchLessons();
   },
 
   methods: {
+      fetchLessons(){
+        getLessons().then(({ data }) => (this.lessons = data.data));
+      },
       deleteCourse(id) {
           deleteCourse(id)
           .then(() => {
+            this.$emit('deleted');
             this.deleted.push(id);
             this.$notify({
               type: "success",
