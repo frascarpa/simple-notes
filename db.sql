@@ -161,7 +161,8 @@ CREATE TABLE public.lessons (
     name character varying,
     description character varying,
     course_id bigint,
-    user_id bigint
+    user_id bigint,
+    date date NOT NULL
 );
 
 
