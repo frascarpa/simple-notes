@@ -44,7 +44,7 @@ class LessonController{
         $data = $request->getData();
 
         $name = $data->name;
-        $description = $data->name;
+        $description = $data->description;
         $courseId = $data->courseId;
 
         if (empty($name) | empty($courseId)) {
