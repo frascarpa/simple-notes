@@ -3,7 +3,7 @@
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on }">
         <v-btn color="primary" dark v-on="on">
-            <v-icon>mdi-plus</v-icon> Add Course
+          <v-icon>mdi-plus</v-icon>Add Course
         </v-btn>
       </template>
       <v-card>
@@ -36,50 +36,47 @@
 </template>
 
 <script>
-
-import { createCourse } from '@/api.js';
+import { createCourse } from "@/api.js";
 
 export default {
-    name: 'create-course',
+  name: "create-course",
 
-    data() {
-        return {
-            dialog: false,
-            name: null,
-            description: null,
-        };
-    },
+  data() {
+    return {
+      dialog: false,
+      name: null,
+      description: null
+    };
+  },
 
-    methods: {
-        create() {
-            createCourse(this.name, this.description)
-                .then(() => {
-                    this.dialog = false;
-                    this.$emit('created');
-                    this.notifyEntityCreated();
-                    })
-                    .catch((err) => {
-                        this.$notify({
-                            type: 'error',
-                            group: 'info',
-                            title: 'Error',
-                            text: 'Cannot create Group: '+ err,
-                        });
-                    });
-
-        },
-        notifyEntityCreated() {
+  methods: {
+    create() {
+      createCourse(this.name, this.description)
+        .then(() => {
+          this.dialog = false;
+          this.$emit("created");
+          this.notifyEntityCreated();
+        })
+        .catch(err => {
           this.$notify({
-              type: "success",
-              group: "info",
-              title: "Done!",
-              text: "New entity created"
-            });
-    }
+            type: "error",
+            group: "info",
+            title: "Error",
+            text: "Cannot create Group: " + err
+          });
+        });
     },
-}
+    notifyEntityCreated() {
+      this.$notify({
+        type: "success",
+        group: "info",
+        title: "Done!",
+        text: "New entity created"
+      });
+    }
+  }
+};
 </script>
 
 <style>
-
 </style>

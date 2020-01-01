@@ -4,25 +4,23 @@
     <v-expansion-panels class="mb-12" accordion>
       <v-expansion-panel v-for="course in displayCourses" :key="course.id">
         <v-expansion-panel-header expand-icon="mdi-menu-down">
-        <v-col cols="4">
-            {{course.name}}
-        </v-col>
+          <v-col cols="4">{{course.name}}</v-col>
           <v-col class="font-weight-light pl-4">{{course.description}}</v-col>
-        <v-tooltip bottom :disabled="!recordLessons[course.id]">
+          <v-tooltip bottom :disabled="!recordLessons[course.id]">
             <template v-slot:activator="{ on }">
-                    <div v-on="on">
-
+              <div v-on="on">
                 <v-btn
-                :disabled="!!recordLessons[course.id]"
-                v-if="user.id === course.user_id"
-                @click.stop="deleteCourse(course.id)"
-                icon>
-                    <v-icon>mdi-trash-can</v-icon>
+                  :disabled="!!recordLessons[course.id]"
+                  v-if="user.id === course.user_id"
+                  @click.stop="deleteCourse(course.id)"
+                  icon
+                >
+                  <v-icon>mdi-trash-can</v-icon>
                 </v-btn>
-                    </div>
+              </div>
             </template>
             <span>There are lessons in this course.</span>
-            </v-tooltip>
+          </v-tooltip>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <lesson-list @deleted="fetchLessons" :lessons="recordLessons[course.id]" />
@@ -59,7 +57,7 @@ export default {
   data() {
     return {
       lessons: [],
-      deleted: [],
+      deleted: []
     };
   },
 
@@ -71,32 +69,31 @@ export default {
       return this.$store.getters.getUser;
     },
     displayCourses() {
-        return this.courses.filter((c) => !this.deleted.includes(c.id));
+      return this.courses.filter(c => !this.deleted.includes(c.id));
     }
   },
 
   mounted() {
-      this.fetchLessons();
+    this.fetchLessons();
   },
 
   methods: {
-      fetchLessons(){
-        getLessons().then(({ data }) => (this.lessons = data.data));
-      },
-      deleteCourse(id) {
-          deleteCourse(id)
-          .then(() => {
-            this.$emit('deleted');
-            this.deleted.push(id);
-            this.$notify({
-              type: "success",
-              group: "info",
-              title: "Done!",
-              text: "Course Deleted"
-            });
-          })
-      }
-  },
+    fetchLessons() {
+      getLessons().then(({ data }) => (this.lessons = data.data));
+    },
+    deleteCourse(id) {
+      deleteCourse(id).then(() => {
+        this.$emit("deleted");
+        this.deleted.push(id);
+        this.$notify({
+          type: "success",
+          group: "info",
+          title: "Done!",
+          text: "Course Deleted"
+        });
+      });
+    }
+  }
 };
 </script>
 

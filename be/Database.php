@@ -1,8 +1,6 @@
 <?php
-// used to get mysql database connection
 class Database{
  
-    // specify your own database credentials
     private $host = "localhost";
     private $port = "5432";
     private $db_name = "simple-notes";
@@ -337,7 +335,6 @@ class Database{
     public function getHistory() {
         $sql = "SELECT * FROM " . $this->history_table . 
         " ORDER BY time desc LIMIT 50";
-        // var_dump($sql);
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_OBJ);
     }
 

@@ -1,9 +1,6 @@
 <template>
-  <v-app >
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-    >
+  <v-app>
+    <v-navigation-drawer v-model="drawer" app>
       <v-list dense>
         <template v-if="!user">
           <v-list-item link @click="$router.push({name:'login'})">
@@ -48,7 +45,7 @@
               <v-list-item-title>Create</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item link @click="$router.push({name:'notes'})" >
+          <v-list-item link @click="$router.push({name:'notes'})">
             <v-list-item-action>
               <v-icon>mdi-pencil</v-icon>
             </v-list-item-action>
@@ -56,7 +53,7 @@
               <v-list-item-title>Notes</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item link @click="$router.push({name:'search'})" >
+          <v-list-item link @click="$router.push({name:'search'})">
             <v-list-item-action>
               <v-icon>mdi-magnify</v-icon>
             </v-list-item-action>
@@ -65,29 +62,19 @@
             </v-list-item-content>
           </v-list-item>
         </template>
-
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar
-      app
-      color="indigo"
-      dark
-    >
+    <v-app-bar app color="indigo" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>Simple Notes</v-toolbar-title>
     </v-app-bar>
 
     <v-content>
-      <v-container
-        fluid
-      >
-        <v-row
-          align="center"
-          justify="center"
-        >
+      <v-container fluid>
+        <v-row align="center" justify="center">
           <v-col class="text-center">
-              <router-view></router-view>
+            <router-view></router-view>
           </v-col>
         </v-row>
       </v-container>
@@ -97,20 +84,17 @@
 </template>
 
 <script>
-
 export default {
-  name: 'App',
-
+  name: "App",
 
   data: () => ({
-    drawer: false,
+    drawer: false
   }),
 
   computed: {
     user() {
       return this.$store.getters.getUser;
     }
-  },
-
+  }
 };
 </script>

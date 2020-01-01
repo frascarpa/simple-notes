@@ -13,7 +13,8 @@
                   :disabled="!!recordNotes[lesson.id]"
                   v-if="user.id === lesson.user_id"
                   @click.stop="deleteLesson(lesson.id)"
-                  icon>
+                  icon
+                >
                   <v-icon>mdi-trash-can</v-icon>
                 </v-btn>
               </div>
@@ -51,7 +52,7 @@ export default {
   data() {
     return {
       notes: [],
-      deleted:[],
+      deleted: []
     };
   },
 
@@ -63,8 +64,9 @@ export default {
       return this.$store.getters.getUser;
     },
     displayLessons() {
-        return this.lessons.filter((l) => !this.deleted.includes(l.id))
-          .sort((a,b) => new Date(a.date) - new Date(b.date));
+      return this.lessons
+        .filter(l => !this.deleted.includes(l.id))
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
     }
   },
 
@@ -73,26 +75,24 @@ export default {
   },
 
   methods: {
-    fetchNotes(){
-      getNotes()
-        .then(({ data }) => (this.notes = data.data));
+    fetchNotes() {
+      getNotes().then(({ data }) => (this.notes = data.data));
     },
     humanDate(date) {
       return dateFormattedFromISO(date);
     },
     deleteLesson(id) {
-      deleteLesson(id)
-      .then(() => {
-            this.deleted.push(id);
-            this.$emit('deleted');
-            this.$notify({
-              type: "success",
-              group: "info",
-              title: "Done!",
-              text: "Lesson Deleted"
-            });
-          })
-      }
+      deleteLesson(id).then(() => {
+        this.deleted.push(id);
+        this.$emit("deleted");
+        this.$notify({
+          type: "success",
+          group: "info",
+          title: "Done!",
+          text: "Lesson Deleted"
+        });
+      });
+    }
   }
 };
 </script>

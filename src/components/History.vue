@@ -3,10 +3,8 @@
     <v-expansion-panels class="mb-4" accordion>
       <v-expansion-panel>
         <v-expansion-panel-header expand-icon="mdi-menu-down">
-          <div class="font-weight-light  pl-4">
-            Recent Activity
-          </div>
-          </v-expansion-panel-header>
+          <div class="font-weight-light pl-4">Recent Activity</div>
+        </v-expansion-panel-header>
         <v-expansion-panel-content class="overflow-y-auto" style="max-height:200px">
           <v-list disabled dense>
             <v-list-item-group color="primary">
