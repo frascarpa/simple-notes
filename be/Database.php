@@ -303,7 +303,7 @@ class Database{
 
         foreach ($columns as $col) {
             foreach ($words as $word) {
-                $where = $where . " OR ". $col . " LIKE '%".$word."%'";
+                $where = $where . " OR LOWER(". $col . ") LIKE '%". strtolower($word) ."%'";
             }
         }
         
