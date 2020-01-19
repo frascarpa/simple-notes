@@ -300,10 +300,8 @@ class Database{
     public function searchExecute($columns, $table, $words) {
         $select = "SELECT * FROM ". $table;
         $where = " WHERE 1=0 ";
-        $idxC = 0;
 
         foreach ($columns as $col) {
-            $idxC ++;
             $idxW = 0;
             $wherew = ""; 
             foreach ($words as $word) {
