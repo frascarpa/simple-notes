@@ -4,6 +4,7 @@
           solo
           class="mb-4"
           label="Search"
+      autofocus
           prepend-inner-icon="search"
           v-model="query"
           @input="handleInput"

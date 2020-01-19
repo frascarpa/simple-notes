@@ -300,14 +300,24 @@ class Database{
     public function searchExecute($columns, $table, $words) {
         $select = "SELECT * FROM ". $table;
         $where = " WHERE 1=0 ";
+        $idxC = 0;
 
         foreach ($columns as $col) {
+            $idxC ++;
+            $idxW = 0;
+            $wherew = ""; 
             foreach ($words as $word) {
-                $where = $where . " OR LOWER(". $col . ") LIKE '%". strtolower($word) ."%'";
+                if (count($words)>1 && $idxW>0 ) {
+                    $wherew = $wherew . ' AND ';
+                }
+                $wherew = $wherew . " LOWER(". $col . ") LIKE '%". strtolower($word) ."%'";
+                $idxW ++;
             }
+                $where = $where . 'OR ( '. $wherew . ' ) ';
         }
         
         $sql = $select . $where;
+        // debug_zval_dump($sql);
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_OBJ);
      
     }
